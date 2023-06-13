@@ -1,4 +1,4 @@
-import { FC, KeyboardEvent } from 'react';
+import { FC, ChangeEvent, KeyboardEvent } from 'react';
 
 import styles from './styles';
 
@@ -6,24 +6,16 @@ interface IFormInput {
 	label: string;
 	id: string;
 	type?: string;
-	onChange?: (e: any) => void;
-	onKeyDown?: () => void;
+	onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
-const FormInput: FC<IFormInput> = ({ label, id, type, onChange, onKeyDown }) => {
+const FormInput: FC<IFormInput> = ({ label, id, type, onChange }) => {
 	return (
 		<div className='mb-4'>
 			<label htmlFor={id} className={styles.inputLabel}>
 				{label}
 			</label>
-			<input
-				type={type || 'text'}
-				id={id}
-				className={styles.input}
-				onChange={onChange}
-				onKeyDown={(e: KeyboardEvent<HTMLInputElement>) => (e.key === 'Enter' ? onKeyDown() : null)}
-				required
-			/>
+			<input type={type || 'text'} id={id} className={styles.input} onChange={onChange} />
 		</div>
 	);
 };

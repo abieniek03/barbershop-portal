@@ -13,7 +13,7 @@ export const metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
 	return (
-		<html lang='en'>
+		<html lang='pl'>
 			<body className={inter.className + ' dark:bg-gray-800'}>
 				<ThemeProvider enableSystem={true} attribute='class'>
 					{children}

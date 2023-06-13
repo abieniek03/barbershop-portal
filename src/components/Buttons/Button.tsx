@@ -4,12 +4,12 @@ import styles from './styles';
 
 interface IButton {
 	label: string;
-	onClick: () => void;
+	onClick: (e: React.FormEvent<HTMLFormElement>) => void;
 }
 
 const Button: FC<IButton> = ({ label, onClick }) => {
 	return (
-		<button onClick={onClick} className={styles.button}>
+		<button onClick={(e) => onClick} className={styles.button}>
 			{label}
 		</button>
 	);

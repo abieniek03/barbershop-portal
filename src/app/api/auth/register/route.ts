@@ -2,14 +2,14 @@ import { NextRequest, NextResponse } from 'next/server';
 import { PrismaClient } from '@prisma/client';
 
 import bcrypt from 'bcrypt';
-import generateAuthToken from '@/utils/backend/generateAuthToken';
+
+import hashPassword from '@/utils/backend/auth/hashPassword';
+import generateAuthToken from '@/utils/backend/auth/generateAuthToken';
 
 const prisma = new PrismaClient();
 
 export const POST = async (req: NextRequest) => {
 	const { email, firstName, lastName, password, rank } = await req.json();
-
-	const hashedPassword = bcrypt.hashSync(password, bcrypt.genSaltSync(10));
 
 	const validation = await prisma.user.findMany({
 		where: {
@@ -18,6 +18,8 @@ export const POST = async (req: NextRequest) => {
 	});
 
 	if (validation.length === 0) {
+		const hashedPassword = hashPassword(password);
+
 		const newUser = await prisma.user.create({
 			data: {
 				email,

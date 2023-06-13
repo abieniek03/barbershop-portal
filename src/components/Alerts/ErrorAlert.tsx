@@ -2,7 +2,7 @@ import { FC } from 'react';
 
 interface IErrorAlert {
 	title: string;
-	communicate: string;
+	communicate?: string;
 }
 
 const ErrorAlert: FC<IErrorAlert> = ({ title, communicate }) => {
@@ -26,7 +26,7 @@ const ErrorAlert: FC<IErrorAlert> = ({ title, communicate }) => {
 			</svg>
 			<span className='sr-only'>Info</span>
 			<div>
-				<span className='font-medium'>{title}!</span> {communicate}
+				<span className='font-medium'>{title}</span> {communicate}
 			</div>
 		</div>
 	);

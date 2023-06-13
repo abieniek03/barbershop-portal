@@ -1,0 +1,20 @@
+<mjml>
+	<mj-body>
+		<mj-section>
+			<mj-column>
+				<mj-text font-size="20px" align="center" color="#06b6d4" font-weight="bold"> Hairdresser portal </mj-text>
+				<mj-divider border-color="#06b6d4" border-width="1px"></mj-divider>
+
+				<mj-text padding-top="20px" font-size="16px" color="#06b6d4" font-family="montserrat">Witamy serdecznie!👋</mj-text>
+				<mj-text font-size="16px" color="#06b6d4" font-family="montserrat"
+					>Weryfikacja użytkownika przebiegła pomyślnie. Możesz ustawić nowe hasło.</mj-text
+				>
+				<mj-button padding-bottom="20px" align="left" font-family="montserrat" background-color="#06b6d4" color="white">
+					Ustaw nowe hasło
+				</mj-button>
+
+				<mj-divider border-color="#06b6d4" border-width="1px"></mj-divider>
+
+		</mj-section>
+	</mj-body>
+</mjml>

@@ -1,6 +1,6 @@
 'use client';
 
-import { FC, useState, ChangeEvent, useEffect } from 'react';
+import { FC, useState, ChangeEvent, FormEvent } from 'react';
 
 import SwitchThemeButton from '@/components/Theme/SwitchThemeButton';
 import FormHeading from '@/components/Form/FormHeading';
@@ -8,9 +8,11 @@ import FormInput from '@/components/Form/FormInput';
 import Button from '@/components/Buttons/Button';
 import LoadingButton from '@/components/Buttons/LoadingButton';
 import LinkButton from '@/components/Buttons/LinkButton';
+import ErrorAlert from '@/components/Alerts/ErrorAlert';
 
 import axios from '../../axiosInstance';
-import ErrorAlert from '@/components/Alerts/ErrorAlert';
+
+import globalStyles from '@/styles/global';
 
 const RegisterPage: FC = () => {
 	const [loadingProcess, setLoadingProcess] = useState<boolean>(false);
@@ -51,29 +53,26 @@ const RegisterPage: FC = () => {
 		},
 	];
 
-	const handleRegister = () => {
+	const handleRegister = (e: FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
 		setLoadingProcess(true);
-		setErrorCommunicate('coś nie tak');
+
 		axios
 			.post('/auth/register', userData)
 			.then((res) => {
 				setLoadingProcess(false);
-				localStorage.setItem('auth-token', res.data.authToken);
-				console.log(res);
+				sessionStorage.setItem('auth-token', res.data.authToken);
 			})
 			.catch((error) => {
 				setLoadingProcess(false);
 				setErrorCommunicate(error.data.communicate);
-				console.error(error);
 			});
-
-		console.log(userData);
 	};
 
 	return (
-		<div className='h-screen max-w-[360px] flex flex-col justify-center items-center mx-auto'>
+		<div className={globalStyles.container}>
 			<SwitchThemeButton customStyles='absolute top-7 right-7' />
-			<form className='w-full'>
+			<form className='w-full max-w-[360px]' onSubmit={handleRegister}>
 				<FormHeading title='Rejestracja' />
 				{formFields.map((el, index) => (
 					<FormInput
@@ -84,7 +83,6 @@ const RegisterPage: FC = () => {
 						onChange={(e: ChangeEvent<HTMLInputElement>) =>
 							setUserData((prevState) => ({ ...prevState, [e.target.id]: e.target.value }))
 						}
-						onKeyDown={handleRegister}
 					/>
 				))}{' '}
 				{errorCommunicate !== '' && <ErrorAlert title='Rejestracja się nie udała' communicate={errorCommunicate} />}
