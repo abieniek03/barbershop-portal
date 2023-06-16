@@ -14,6 +14,11 @@ import Modal from '@/components/Modals/Modal';
 import axios from '../../../axiosInstance';
 import globalStyles from '@/styles/global';
 
+interface IUserData {
+	newPassword: string;
+	repeatNewPassword: string;
+}
+
 const RecoveryPage: FC = () => {
 	const [mounted, setMounted] = useState<boolean>(false);
 
@@ -23,7 +28,7 @@ const RecoveryPage: FC = () => {
 	const [errorCommunicate, setErrorCommunicate] = useState<string>('');
 	const [successfullProcess, setSuccessfullProcess] = useState<boolean>(false);
 
-	const [userData, setUserData] = useState<{ [key: string]: string }>({
+	const [userData, setUserData] = useState<IUserData>({
 		newPassword: '',
 		repeatNewPassword: '',
 	});

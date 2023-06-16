@@ -13,18 +13,21 @@ import ErrorAlert from '@/components/Alerts/ErrorAlert';
 import axios from '../../axiosInstance';
 
 import globalStyles from '@/styles/global';
+import { IUserData } from '@/store/features/userSlice';
 
 const RegisterPage: FC = () => {
 	const [loadingProcess, setLoadingProcess] = useState<boolean>(false);
 	const [errorCommunicate, setErrorCommunicate] = useState<string>('');
 
-	const [userData, setUserData] = useState<{ [key: string]: string }>({
-		email: '',
-		firstName: '',
-		lastName: '',
-		password: '',
-		passwordRepeat: '',
-		rank: 'client',
+	const [userData, setUserData] = useState<IUserData>({
+		user: {
+			email: '',
+			firstName: '',
+			lastName: '',
+			password: '',
+			passwordRepeat: '',
+			rank: 'client',
+		},
 	});
 
 	const formFields = [

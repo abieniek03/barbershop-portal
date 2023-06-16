@@ -1,8 +1,13 @@
 'use client';
 
-import '../globals.css';
+import { useEffect, useState } from 'react';
+import { fetchUserData } from '@/store/features/userSlice';
+import { Provider } from 'react-redux';
 import { ThemeProvider } from 'next-themes';
 import { Inter } from 'next/font/google';
+
+import store from '../store/store';
+import '../globals.css';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -12,13 +17,25 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+	const [mounted, setMounted] = useState<boolean>(false);
+
+	useEffect(() => {
+		setMounted(true);
+		if (mounted) {
+			const userID = sessionStorage.getItem('user-id') || '';
+			store.dispatch(fetchUserData(userID));
+		}
+	}, [mounted]);
+
 	return (
-		<html lang='pl'>
-			<body className={inter.className + ' dark:bg-gray-800'}>
-				<ThemeProvider enableSystem={true} attribute='class'>
-					{children}
-				</ThemeProvider>
-			</body>
-		</html>
+		<Provider store={store}>
+			<html lang='pl'>
+				<body className={inter.className + ' dark:bg-gray-800'}>
+					<ThemeProvider enableSystem={true} attribute='class'>
+						{children}
+					</ThemeProvider>
+				</body>
+			</html>
+		</Provider>
 	);
 }

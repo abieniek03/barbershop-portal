@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { PrismaClient } from '@prisma/client';
 
-import sendResetPasswordEmail from '@/utils/backend/sendMail/resetPassword/sendMail';
+import sendResetPasswordEmail from '@/utils/sendMail/resetPassword/sendMail';
 
 const prisma = new PrismaClient();
 

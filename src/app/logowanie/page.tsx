@@ -14,11 +14,16 @@ import axios from '../../axiosInstance';
 
 import globalStyles from '@/styles/global';
 
+interface IUserData {
+	email: string;
+	password: string;
+}
+
 const LoginPage: FC = () => {
 	const [loadingProcess, setLoadingProcess] = useState<boolean>(false);
 	const [errorCommunicate, setErrorCommunicate] = useState<string>('');
 
-	const [userData, setUserData] = useState<{ [key: string]: string }>({
+	const [userData, setUserData] = useState<IUserData>({
 		email: '',
 		password: '',
 	});
@@ -44,7 +49,9 @@ const LoginPage: FC = () => {
 			.post('/auth/login', userData)
 			.then((res) => {
 				setLoadingProcess(false);
+				console.log(res);
 				sessionStorage.setItem('auth-token', res.data.authToken);
+				sessionStorage.setItem('user-id', res.data.user.id);
 			})
 			.catch((error) => {
 				setLoadingProcess(false);

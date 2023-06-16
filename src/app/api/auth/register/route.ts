@@ -3,8 +3,8 @@ import { PrismaClient } from '@prisma/client';
 
 import bcrypt from 'bcrypt';
 
-import hashPassword from '@/utils/backend/auth/hashPassword';
-import generateAuthToken from '@/utils/backend/auth/generateAuthToken';
+import hashPassword from '@/utils/auth/hashPassword';
+import generateAuthToken from '@/utils/auth/generateAuthToken';
 
 const prisma = new PrismaClient();
 

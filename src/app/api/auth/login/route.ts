@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { PrismaClient } from '@prisma/client';
 
 import bcrypt from 'bcrypt';
-import generateAuthToken from '@/utils/backend/auth/generateAuthToken';
+import generateAuthToken from '@/utils/auth/generateAuthToken';
 
 const prisma = new PrismaClient();
 
