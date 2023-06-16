@@ -8,7 +8,6 @@ import Navbar from '@/components/Navbar/Navbar';
 
 const Test: FC = () => {
 	const user = useSelector((state: any) => state.user);
-	console.log(user);
 
 	// return <Layout>{user.id == '' ? <LoadingAnimation label='Wczytywanie' /> : <Navbar />}</Layout>;
 	return <Navbar />;

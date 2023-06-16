@@ -29,10 +29,8 @@ const initialState: IUserData = {
 export const fetchUserData = createAsyncThunk('userdata/fetch', async (userID: string) => {
 	try {
 		const response = await axios.get(`/auth/${userID}`);
-		console.log(response);
 		return response.data;
 	} catch (error) {
-		console.error(error);
 		return null;
 	}
 });

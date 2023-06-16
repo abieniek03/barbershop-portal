@@ -26,7 +26,7 @@ const SwitchThemeButton: FC<ISwitchThemeButton> = ({ customStyles }) => {
 	return (
 		<button
 			onClick={switchTheme}
-			className={`p-3 mb-2 mr-2 text-lg font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary focus:z-10 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-primary dark:hover:bg-gray-700 ${customStyles}`}
+			className={`p-3 mr-2 text-lg font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary focus:z-10 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-content-hover dark:hover:bg-gray-700 ${customStyles}`}
 		>
 			{currentTheme === 'dark' ? <FiSun /> : <FiMoon />}
 		</button>

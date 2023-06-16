@@ -1,10 +1,11 @@
 import { FC } from 'react';
+import Navbar from '@/components/Navbar/Navbar';
 
 const Home: FC = () => {
 	return (
-		<div>
-			<h1 className='bg-red-500 dark:bg-sky-500'>Hello!👋</h1>
-		</div>
+		<>
+			<Navbar />
+		</>
 	);
 };
 export default Home;
