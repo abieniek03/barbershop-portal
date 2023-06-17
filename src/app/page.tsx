@@ -1,5 +1,6 @@
 import { FC } from 'react';
 
+import 'react-calendar/dist/Calendar.css';
 import Navbar from '@/components/Navbar/Navbar';
 import HeroSection from '@/components/Sections/HeroSection';
 import SalonsSection from '@/components/Sections/SalonsSection';
