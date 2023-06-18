@@ -4,9 +4,20 @@ import { pl } from 'date-fns/locale';
 
 import fetchVisits from '@/utils/fetch/fetchVisits';
 
+interface IVisits {
+	date: string;
+	employee: string;
+	id: string;
+	name: string;
+	time: string;
+	userID: string;
+}
+
 const WeekSlider: FC = () => {
 	const [calendar, setCalendar] = useState<Date[]>([]);
 	const [selectedDate, setSelectedDate] = useState<string>();
+	const [visits, setVisits] = useState<IVisits[]>();
+
 	const [date] = useState(new Date());
 
 	const formatMonth = [
@@ -68,8 +79,15 @@ const WeekSlider: FC = () => {
 		return currentDate.toUTCString();
 	};
 
+	const getVisits = async (date: string) => {
+		const visits = await fetchVisits({ date });
+		setVisits(visits);
+		console.log('visits - ' + visits);
+		console.log(visits);
+	};
+
 	useEffect(() => {
-		fetchVisits({ date: '19 Jun 2023' });
+		getVisits('19 Jun 2023');
 	}, []);
 
 	useEffect(() => {
@@ -98,7 +116,8 @@ const WeekSlider: FC = () => {
 							} mx-2 w-16 text-center flex-shrink-0 rounded-lg`}
 							onClick={() => {
 								setSelectedDate(el.toUTCString());
-								fetchVisits({ date: el.toUTCString().substring(5, 16) });
+								getVisits(el.toUTCString().substring(5, 16));
+								// fetchVisits({ date: el.toUTCString().substring(5, 16) });
 							}}
 						>
 							<p>{formatDay(el).split('.')[0]}</p>
@@ -106,6 +125,15 @@ const WeekSlider: FC = () => {
 						</div>
 					))}
 				</div>
+			</div>
+			<div className='bg-red-500'>
+				{visits &&
+					visits.map((el, index) => (
+						<div key={index} className='bg-green-500'>
+							<p>{el.employee}</p>
+						</div>
+					))}
+				<div></div>
 			</div>
 		</div>
 	);

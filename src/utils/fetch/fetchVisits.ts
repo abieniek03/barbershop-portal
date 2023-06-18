@@ -1,10 +1,14 @@
 import axios from '../../axiosInstance';
 
 const fetchVisits = (params: { [key: string]: string }) => {
-	axios
+	let response;
+	return (response = axios
 		.post('/visits/select', params)
-		.then((res) => console.log(res))
-		.catch((error) => console.error(error));
+		.then((res) => res.data)
+		.catch(() => {
+			const errorInfo = 'Nie znaleziono';
+			return errorInfo;
+		}));
 };
 
 export default fetchVisits;
