@@ -20,3 +20,14 @@ model User {
 
   @@map("users")
 }
+
+model Visit {
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  employee String
+  userID   String
+  name     String
+  date     String
+  time     String
+
+  @@map("visits")
+}
