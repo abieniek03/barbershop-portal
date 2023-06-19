@@ -1,6 +1,7 @@
 'use client';
 
-import { FC, useState, ChangeEvent, FormEvent } from 'react';
+import { FC, useState, ChangeEvent, FormEvent, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 
 import SwitchThemeButton from '@/components/Theme/SwitchThemeButton';
 import FormHeading from '@/components/Form/FormHeading';
@@ -11,6 +12,7 @@ import LinkButton from '@/components/Buttons/LinkButton';
 import ErrorAlert from '@/components/Alerts/ErrorAlert';
 
 import axios from '../../axiosInstance';
+import navigateAuthUser from '@/utils/auth/navigateAuthUser';
 
 import globalStyles from '@/styles/global';
 
@@ -20,6 +22,7 @@ interface IUserData {
 }
 
 const LoginPage: FC = () => {
+	const router = useRouter();
 	const [loadingProcess, setLoadingProcess] = useState<boolean>(false);
 	const [errorCommunicate, setErrorCommunicate] = useState<string>('');
 
@@ -52,6 +55,7 @@ const LoginPage: FC = () => {
 				console.log(res);
 				sessionStorage.setItem('auth-token', res.data.authToken);
 				sessionStorage.setItem('user-id', res.data.user.id);
+				router.push(navigateAuthUser(res.data.user.rank));
 			})
 			.catch((error) => {
 				setLoadingProcess(false);

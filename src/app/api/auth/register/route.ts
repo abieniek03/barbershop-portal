@@ -34,6 +34,6 @@ export const POST = async (req: NextRequest) => {
 
 		return NextResponse.json({ newUser, authToken }, { status: 201 });
 	} else {
-		console.log('lipa');
+		return NextResponse.json({ communicate: 'Zarejestrowano już konto na podany adres email.' }, { status: 406 });
 	}
 };
