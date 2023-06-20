@@ -13,7 +13,7 @@ interface IVisits {
 	userID: string;
 }
 
-const WeekSlider: FC = () => {
+const WeekSlider: FC<{ view: string }> = ({ view }) => {
 	const [calendar, setCalendar] = useState<Date[]>([]);
 	const [selectedDate, setSelectedDate] = useState<string>('');
 	const [selectedEmployee, setSelectedEmployee] = useState<string>('any');
@@ -22,7 +22,7 @@ const WeekSlider: FC = () => {
 
 	const [date] = useState(new Date());
 
-	const formatMonth = [
+	const monthsNames = [
 		'Styczeń',
 		'Luty',
 		'Marzec',
@@ -125,7 +125,7 @@ const WeekSlider: FC = () => {
 			<p onClick={() => fetchVisits({ date: '19 Jun 2023' })}>fetch</p>
 			<div>
 				<p className='text-gray-800 dark:text-neutral-300 text-center text-lg  font-bold'>
-					{formatMonth[date.getMonth()]}
+					{monthsNames[new Date(selectedDate).getMonth()]}
 				</p>
 				<div className=' flex overflow-x-scroll cursor-pointer mt-3'>
 					{calendar.map((el, index) => (

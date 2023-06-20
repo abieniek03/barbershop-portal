@@ -10,7 +10,7 @@ const SaveSection: FC = () => {
 		<SectionLayout>
 			<SectionTitle title='Zarezerwuj termin' id='zapisy' />
 			<div>
-				<WeekSlider />
+				<WeekSlider view='user' />
 			</div>
 		</SectionLayout>
 	);

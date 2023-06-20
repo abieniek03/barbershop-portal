@@ -7,8 +7,8 @@ import { fetchUserData } from '@/store/features/userSlice';
 
 import SwitchThemeButton from '../Theme/SwitchThemeButton';
 import Logo from '../Logo';
-import navigationItems from '@/data/navigationItems';
 import { LuMenu, LuX } from 'react-icons/lu';
+import navigationItems from '@/data/navigationItems';
 import UserProfileIcon from './UserProfileIcon';
 
 import { IUserData } from '@/store/features/userSlice';
@@ -22,7 +22,6 @@ const Navbar: FC = () => {
 
 	const dispatch = useStoreDispatch();
 	const user = useStoreSelector((store: IUserData) => store.user);
-	
 
 	const toggleUserMenu = () => {
 		setMenuIsOpen(false);
@@ -64,7 +63,14 @@ const Navbar: FC = () => {
 
 				<div className={`${!mounted ? 'invisible' : ''} flex items-center`}>
 					<div className='lg:order-last' onClick={toggleUserMenu}>
-						{loginedUser && <UserProfileIcon open={userIsOpen} firstName={user.firstName} lastName={user.lastName} />}
+						{loginedUser && (
+							<UserProfileIcon
+								open={userIsOpen}
+								firstName={user.firstName}
+								lastName={user.lastName}
+								admin={user.rank === 'admin'}
+							/>
+						)}
 					</div>
 					<div className='flex justify-center items-center'>
 						<SwitchThemeButton customStyles='lg:order-last mb-0 lg:mr-0 lg:ml-2' />
