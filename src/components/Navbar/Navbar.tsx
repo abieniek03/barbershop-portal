@@ -12,6 +12,7 @@ import navigationItems from '@/data/navigationItems';
 import UserProfileIcon from './UserProfileIcon';
 
 import { IUserData } from '@/store/features/userSlice';
+import globalStyles from '@/styles/global';
 
 const Navbar: FC = () => {
 	const [menuIsOpen, setMenuIsOpen] = useState<boolean>(false);
@@ -99,16 +100,10 @@ const Navbar: FC = () => {
 
 							{!loginedUser && (
 								<div className='flex flex-col px-2 lg:flex-row lg:px-0'>
-									<Link
-										href='/logowanie'
-										className='text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary focus:z-10 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-content-hover dark:hover:bg-gray-700 my-1 px-4 py-2 lg:mx-2 lg:my-2 text-center'
-									>
+									<Link href='/logowanie' className={globalStyles.buttonSecondary}>
 										Zaloguj się
 									</Link>
-									<Link
-										href='/rejestracja'
-										className='bg-primary text-white hover:bg-primary-hover rounded-lg focus:outline-none my-2 px-4 py-2 lg:mx-2 text-center'
-									>
+									<Link href='/rejestracja' className={globalStyles.buttonPrimary}>
 										Zarejestruj się
 									</Link>
 								</div>

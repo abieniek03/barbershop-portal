@@ -4,6 +4,8 @@ import { pl } from 'date-fns/locale';
 
 import fetchVisits from '@/utils/fetch/fetchVisits';
 
+import globalStyles from '@/styles/global';
+
 interface IVisits {
 	date: string;
 	employee: string;
@@ -16,9 +18,9 @@ interface IVisits {
 const WeekSlider: FC<{ view: string }> = ({ view }) => {
 	const [calendar, setCalendar] = useState<Date[]>([]);
 	const [selectedDate, setSelectedDate] = useState<string>('');
-	const [selectedEmployee, setSelectedEmployee] = useState<string>('any');
 	const [visits, setVisits] = useState<IVisits[]>();
 	const [accessibleVisits, setAccessibleVisits] = useState<string[]>();
+	// const [selectedEmployee, setSelectedEmployee] = useState<string>('any');
 
 	const [date] = useState(new Date());
 
@@ -110,7 +112,7 @@ const WeekSlider: FC<{ view: string }> = ({ view }) => {
 	};
 
 	useEffect(() => {
-		getVisits('19 Jun 2023');
+		getVisits('21 Jun 2023');
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
@@ -127,7 +129,7 @@ const WeekSlider: FC<{ view: string }> = ({ view }) => {
 				<p className='text-gray-800 dark:text-neutral-300 text-center text-lg  font-bold'>
 					{monthsNames[new Date(selectedDate).getMonth()]}
 				</p>
-				<div className=' flex overflow-x-scroll cursor-pointer mt-3'>
+				<div className='flex overflow-x-scroll cursor-pointer mt-3'>
 					{calendar.map((el, index) => (
 						<div
 							key={index}
@@ -148,58 +150,22 @@ const WeekSlider: FC<{ view: string }> = ({ view }) => {
 					))}
 				</div>
 			</div>
-			<div className='bg-red-700 flex'>
-				<div className='p-4'>
-					<p>Pracownik</p>
-					<button
-						onClick={(e: any) => {
-							setSelectedEmployee(e.target.textContent);
-							console.log(selectedEmployee);
-						}}
-						className={`${selectedEmployee === 'Dowolny' ? 'bg-red-800' : ''} bg-sky-700 w-full p-2 my-2`}
-					>
-						Dowolny
-					</button>
-					<button
-						onClick={(e: any) => {
-							setSelectedEmployee(e.target.textContent);
-							console.log(selectedEmployee);
-						}}
-						className={`${selectedEmployee === 'Roman' ? 'bg-red-800' : ''} bg-sky-700 w-full p-2 my-2`}
-					>
-						Roman
-					</button>
-					<button
-						onClick={(e: any) => {
-							setSelectedEmployee(e.target.textContent);
-							console.log(selectedEmployee);
-						}}
-						className={`${selectedEmployee === 'Agata' ? 'bg-red-800' : ''} bg-sky-700 w-full p-2 my-2`}
-					>
-						Agata
-					</button>
-				</div>
-				<div className='w-full'>
-					{/* {visits &&
-					visits.map((el, index) => (
-						<div key={index} className='bg-green-500'>
-							<p>{el}</p>
-						</div>
-					))} */}
 
-					{/* {allVisitsHour.map((el, index) => (
-					<div key={index} className='bg-green-500 my-2'>
-						<p>{el}</p>
-					</div>
-				))} */}
-
-					{accessibleVisits &&
-						accessibleVisits.map((el, index) => (
-							<div key={index} className='bg-green-500 p-2'>
-								<p>{el}</p>
-							</div>
-						))}
-				</div>
+			<div className='w-full flex flex-wrap justify-center mx-auto py-4'>
+				{accessibleVisits &&
+					accessibleVisits.map((el, index) => (
+						<button
+							onClick={() => {
+								console.log(selectedDate);
+								console.log('kliknięto!😎');
+							}}
+							type='button'
+							key={index}
+							className={`${globalStyles.buttonSecondary} mb-2 mr-2 mp-2 `}
+						>
+							{el}
+						</button>
+					))}
 			</div>
 		</div>
 	);
