@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer utilities {
+	.selected-employee {
+		border: 2px solid #22c55e;
+	}
+}

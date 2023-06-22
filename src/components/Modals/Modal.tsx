@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, ReactNode, useState } from 'react';
 import Link from 'next/link';
 
 import globalStyles from '@/styles/global';
@@ -7,29 +7,22 @@ import buttonStyles from '../Buttons/styles';
 interface IModal {
 	visible: boolean;
 	title: string;
-	message: string;
+	children: ReactNode;
+	addStyles?: string;
 }
 
-const Modal: FC<IModal> = ({ visible, title, message }) => {
+const Modal: FC<IModal> = ({ visible, title, children, addStyles }) => {
 	return (
 		<div
 			className={`${
 				visible ? 'animate-open-modal' : 'hidden'
-			} bg-modal-bg absolute h-screen w-screen flex justify-center items-center`}
+			} bg-modal-bg fixed z-50 h-screen w-screen top-0 left-0 flex justify-center items-center`}
 		>
-			<div className='dark:bg-gray-800 mx-6 p-6 rounded-lg lg:p-8'>
+			<div className={`bg-neutral-100 dark:bg-gray-800 mx-6 p-6 rounded-lg lg:p-8 ${addStyles}`}>
 				<h2 className={`${globalStyles.h2} pb-2 text-center border-b border-neutral-200 dark:border-gray-700`}>
 					{title}
 				</h2>
-				<p className='my-2'>{message}</p>
-				<div className='flex justify-center items-center'>
-					<Link
-						href='/logowanie'
-						className=' bg-primary hover:bg-primary-hover mt-2 px-5 py-2.5 text-white font-medium rounded-lg'
-					>
-						Przejdź
-					</Link>
-				</div>
+				{children}
 			</div>
 		</div>
 	);

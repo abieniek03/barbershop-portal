@@ -1,6 +1,7 @@
 'use client';
 
 import { FC, useState, ChangeEvent, FormEvent, useCallback, useEffect } from 'react';
+import Link from 'next/link';
 
 import SwitchThemeButton from '@/components/Theme/SwitchThemeButton';
 import FormHeading from '@/components/Form/FormHeading';
@@ -88,11 +89,17 @@ const RecoveryPage: FC = () => {
 		<div className={globalStyles.container}>
 			<SwitchThemeButton customStyles='absolute top-7 right-7' />
 
-			<Modal
-				visible={successfullProcess}
-				title='Twoje hasło zostało zmienione'
-				message='Zaloguj się ponownie na swoje konto używając nowego hasła.'
-			/>
+			<Modal visible={successfullProcess} title='Twoje hasło zostało zmienione'>
+				<p className='my-2'>Zaloguj się ponownie na swoje konto używając nowego hasła.</p>
+				<div className='flex justify-center items-center'>
+					<Link
+						href='/logowanie'
+						className=' bg-primary hover:bg-primary-hover mt-2 px-5 py-2.5 text-white font-medium rounded-lg'
+					>
+						Przejdź
+					</Link>
+				</div>
+			</Modal>
 
 			{verification === 'checking' && <LoadingAnimation label='Trwa weryfikacja...' />}
 			{verification === 'successfull' && (

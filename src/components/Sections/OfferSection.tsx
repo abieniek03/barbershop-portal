@@ -1,19 +1,36 @@
-import { FC } from 'react';
+'use client';
+import { FC, useState, useEffect } from 'react';
 import Image from 'next/image';
 
 import SectionLayout from '../Layouts/SectionLayout';
 import SectionTitle from './Elements/SectionTitle';
 
 import imageURL from '../../images/offer.jpg';
+import fetchServices from '@/utils/fetch/fetchServices';
 
-const offerItem: { title: string; info: string; price: number }[] = [
-	{ title: 'Strzyżenie włosów', info: 'Konsultacja, mycie, strzyżenie i układanie włosów.', price: 75 },
-	{ title: 'Golenie brzytwą', info: 'Pełne golenie brzytwą.', price: 50 },
-	{ title: 'Zarost', info: 'Stylizacja zarostu', price: 60 },
-	{ title: 'Kombo', info: 'Konsultacja, mycie, strzyżenie i układanie włosów wraz ze stylizacją zarostu.', price: 120 },
-];
+export interface IServicesItem {
+	name: string;
+	price: number;
+	time: string;
+	info: string;
+}
 
 const OfferSection: FC = () => {
+	const [servicesItems, setServicesItems] = useState<IServicesItem[]>();
+
+	useEffect(() => {
+		const fetchOfferItems = async () => {
+			try {
+				const data = await fetchServices();
+				setServicesItems(data);
+			} catch (error) {
+				console.error('Błąd podczas pobierania usług:', error);
+			}
+		};
+
+		fetchOfferItems();
+	}, []);
+
 	return (
 		<SectionLayout>
 			<div className='lg:flex lg:items-center'>
@@ -39,10 +56,10 @@ const OfferSection: FC = () => {
 					<div>
 						<SectionTitle title='Cennik' />
 						<div className='mt-2'>
-							{offerItem.map((el, index) => (
+							{servicesItems?.map((el, index) => (
 								<div key={index} className='flex justify-between mb-8'>
 									<div className='max-w-[350px]'>
-										<p className='text-xl font-bold'>{el.title}</p>
+										<p className='text-xl font-bold'>{el.name}</p>
 										<p className='text-sm text-gray-800 dark:text-neutral-200'> {el.info}</p>
 									</div>
 									<p className='text-xl font-bold text-primary'>{el.price}PLN</p>

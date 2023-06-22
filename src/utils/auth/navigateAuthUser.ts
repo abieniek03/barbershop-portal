@@ -1,5 +1,5 @@
 const navigateAuthUser = (rank: string) => {
-	return rank === 'admin' ? '/dashboard' : '/';
+	return rank === 'admin' ? '/administrator/dashboard' : '/';
 };
 
 export default navigateAuthUser;

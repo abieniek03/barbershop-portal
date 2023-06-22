@@ -6,10 +6,10 @@ export interface IUserData {
 	user: {
 		id?: string;
 		email: string;
-		firstName: string;
-		lastName: string;
-		password: string;
-		passwordRepeat: string;
+		firstName?: string;
+		lastName?: string;
+		password?: string;
+		passwordRepeat?: string;
 		rank: string;
 	};
 }

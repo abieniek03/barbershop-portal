@@ -33,9 +33,15 @@ const UserProfileIcon: FC<IUserProfileIcon> = ({ open, firstName, lastName, admi
 							{firstName} {lastName}
 						</p>
 						{admin && (
-							<Link href='/dashboard' className={itemStyles}>
-								Dashboard
-							</Link>
+							<>
+								<Link href='/administrator/dashboard' className={itemStyles}>
+									Dashboard
+								</Link>
+
+								<Link href='/administrator/rejestracja' className={itemStyles}>
+									Dodaj administratora
+								</Link>
+							</>
 						)}
 						<Link href='/zmien-dane' className={itemStyles}>
 							Zmień dane
