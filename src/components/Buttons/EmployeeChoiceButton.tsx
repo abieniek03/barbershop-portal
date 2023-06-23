@@ -2,9 +2,13 @@ import { FC, useState, useEffect, MouseEvent } from 'react';
 import Image from 'next/image';
 import avatar from '@/images/team/Agata.jpg';
 
-const EmployeeChoiceButton: FC<{ firstName?: string }> = ({ firstName }) => {
+interface IEmployeeChoiceButton {
+	firstName?: string;
+	getSelectedEmployee: (params: string) => void;
+}
+
+const EmployeeChoiceButton: FC<IEmployeeChoiceButton> = ({ firstName, getSelectedEmployee }) => {
 	const [imageSrc, setImageSrc] = useState<string>('');
-	const [selectedEmployee, setSelectedEmployee] = useState<string>('');
 
 	useEffect(() => {
 		const loadImage = async () => {
@@ -34,7 +38,7 @@ const EmployeeChoiceButton: FC<{ firstName?: string }> = ({ firstName }) => {
 		<button
 			onClick={(e) => {
 				removeSelectedClass(e);
-				setSelectedEmployee(e.currentTarget.lastChild?.textContent || '');
+				getSelectedEmployee(e.currentTarget.lastChild?.textContent || '');
 			}}
 			className='flex flex-col justify-center items-center mx-2 first:ml-0 last:mr-0'
 		>
