@@ -55,10 +55,7 @@ const Navbar: FC = () => {
 	}, []);
 
 	return (
-		<nav
-			className={`sticky top-0 w-full bg-neutral-100 dark:bg-gray-900 ${loginedUser ? 'py-1.5' : ''}`}
-			onClick={() => console.log(user.id)}
-		>
+		<nav className={`sticky top-0 w-full bg-neutral-100 dark:bg-gray-900 ${loginedUser ? 'py-1.5' : ''}`}>
 			<div className='relative w-full max-w-[1600px] mx-auto flex justify-between items-center p-4 lg:py-2'>
 				<Logo path={logoPath} />
 
@@ -67,9 +64,9 @@ const Navbar: FC = () => {
 						{loginedUser && (
 							<UserProfileIcon
 								open={userIsOpen}
-								firstName={user.firstName}
-								lastName={user.lastName}
-								admin={user.rank === 'admin'}
+								firstName={user?.firstName || ''}
+								lastName={user?.lastName || ''}
+								admin={user?.rank === 'admin'}
 							/>
 						)}
 					</div>
