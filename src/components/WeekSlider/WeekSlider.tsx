@@ -1,7 +1,5 @@
 'use client';
-import { FC, useState, useEffect, useCallback, MouseEvent } from 'react';
-import { format } from 'date-fns';
-import { pl } from 'date-fns/locale';
+import { FC, useState, useEffect, useCallback, useRef, MouseEvent } from 'react';
 import { useRouter } from 'next/navigation';
 
 import { useStoreDispatch, useStoreSelector } from '@/store/store';
@@ -17,24 +15,18 @@ import axios from '@/axiosInstance';
 
 import { IUserData } from '@/store/features/userSlice';
 import { IServicesItem } from '@/components/Sections/OfferSection';
+import { formatDay, formatDate, formatFullDate } from '@/utils/formatDate';
 
 import globalStyles from '@/styles/global';
 import LoadingAnimation from '../Animations/LoadingAnimation';
 
-interface IVisits {
-	date: string;
-	employee: string;
-	id: string;
-	name: string;
-	time: string;
-	userID: string;
-}
-
 interface IVisitData {
+	id?: string;
 	date: string;
 	hour: string;
 	employee: string;
 	service: string;
+	time: number;
 }
 
 interface IAdminData {
@@ -51,7 +43,7 @@ const WeekSlider: FC<{ view: string }> = ({ view }) => {
 	const router = useRouter();
 	const [loading, setLoading] = useState<boolean>(true);
 	const [calendar, setCalendar] = useState<Date[]>([]);
-	const [visits, setVisits] = useState<IVisits[]>();
+	const [visits, setVisits] = useState<IVisitData[]>();
 	const [accessibleVisits, setAccessibleVisits] = useState<string[]>();
 	const [choiceModal, setChoiceModal] = useState<boolean>(false);
 	const [currentFullDate, setCurrentFullDate] = useState<string>('');
@@ -60,10 +52,12 @@ const WeekSlider: FC<{ view: string }> = ({ view }) => {
 		hour: '',
 		employee: '',
 		service: '',
+		time: 0,
 	});
 	const [allEmployees, setAllEmployees] = useState<IAdminData[]>();
 	const [servicesItems, setServicesItems] = useState<IServicesItem[]>();
 	const [selectedEmployeeError, setSelectedEmployeeError] = useState<boolean>(false);
+	const visitDataRef = useRef<IVisitData>(visitData);
 
 	const dispatch = useStoreDispatch();
 	const user = useStoreSelector((store: IUserData) => store.user);
@@ -104,18 +98,6 @@ const WeekSlider: FC<{ view: string }> = ({ view }) => {
 		'17:30',
 	];
 
-	const formatDay = (date: Date) => {
-		return format(date, 'EEE', { locale: pl });
-	};
-
-	const formatDate = (date: Date) => {
-		return format(date, 'dd', { locale: pl });
-	};
-
-	const formatFullDate = (date: Date) => {
-		return format(date, 'EEEE, do MMMM yyyy', { locale: pl });
-	};
-
 	const generateCalendar = useCallback(() => {
 		const tempCalendar: Date[] = [];
 
@@ -153,15 +135,27 @@ const WeekSlider: FC<{ view: string }> = ({ view }) => {
 	};
 
 	const getVisits = async (date: string) => {
+		console.log(date);
 		const visits = await fetchVisits({ date });
 		setVisits(visits);
-		setAccessibleVisits(allVisitsHour.filter((hour) => visits.filter((el: IVisits) => el.time === hour).length !== 2));
+
+		const bookedVisits: string[] = [];
+
+		visits.map((el: IVisitData) => {
+			bookedVisits.push(allVisitsHour.filter((hour) => hour === el.hour).toString());
+			if (el.time === 60) {
+				bookedVisits.push(allVisitsHour[allVisitsHour.findIndex((hour) => hour === el.hour) + 1]);
+			}
+		});
+
+		setAccessibleVisits(allVisitsHour.filter((hour) => !bookedVisits.includes(hour)));
+
 		setLoading(false);
 	};
 
 	const choiceEmployee = async (hour: string) => {
 		setVisitData((prevState) => ({ ...prevState, hour }));
-		const bookedVisits = await fetchVisits({ date: visitData.date.slice(4, 15), time: hour });
+		const bookedVisits = await fetchVisits({ date: visitData.date.slice(4, 15), hour });
 		setChoiceModal(true);
 		document.body.classList.add('overflow-hidden');
 	};
@@ -189,18 +183,19 @@ const WeekSlider: FC<{ view: string }> = ({ view }) => {
 	};
 
 	const selectService = (e: MouseEvent<HTMLButtonElement>) => {
+		document.body.classList.remove('overflow-hidden');
 		const updatedService = e.currentTarget?.dataset?.service || '';
 		setVisitData((prevState) => ({
 			...prevState,
 			service: updatedService,
 		}));
 
-		if (visitData.employee === '') {
+		if (visitDataRef.current.employee === '') {
 			setSelectedEmployeeError(true);
-			sessionStorage.setItem('visit-data', JSON.stringify(visitData));
 		} else {
+			sessionStorage.setItem('visit-data', JSON.stringify(visitDataRef.current));
 			if (sessionStorage.getItem('auth-token')) {
-				router.push('/elo');
+				router.push('/podsumowanie');
 			} else {
 				router.push('/logowanie');
 			}
@@ -208,7 +203,7 @@ const WeekSlider: FC<{ view: string }> = ({ view }) => {
 	};
 
 	useEffect(() => {
-		getVisits('Jun 23 2023');
+		getVisits('Jun 26 2023');
 		fetchEmployees();
 
 		const fetchOfferItems = async () => {
@@ -228,7 +223,9 @@ const WeekSlider: FC<{ view: string }> = ({ view }) => {
 		setCurrentFullDate(formatFullDate(new Date(visitData.date)));
 	}, [visitData.date]);
 
-	useEffect(() => console.log(visitData), [visitData]);
+	useEffect(() => {
+		visitDataRef.current = visitData;
+	}, [visitData]);
 
 	useEffect(() => {
 		generateCalendar();
@@ -251,7 +248,7 @@ const WeekSlider: FC<{ view: string }> = ({ view }) => {
 							{calendar.map((el, index) => (
 								<div
 									key={index}
-									data-date={el.toDateString().substring(5, 16)}
+									data-date={el.toDateString().substring(4, 15)}
 									className={`${
 										handleDate(el) === visitData.date
 											? 'bg-primary text-white text-center'
@@ -259,7 +256,7 @@ const WeekSlider: FC<{ view: string }> = ({ view }) => {
 									} mx-2 w-16 text-center flex-shrink-0 rounded-lg`}
 									onClick={() => {
 										setVisitData((prevState) => ({ ...prevState, date: el.toDateString() }));
-										getVisits(el.toDateString().substring(5, 16));
+										getVisits(el.toDateString().substring(4, 15));
 									}}
 								>
 									<p>{formatDay(el).split('.')[0]}</p>
@@ -310,7 +307,7 @@ const WeekSlider: FC<{ view: string }> = ({ view }) => {
 													/>
 												))}
 										</div>
-										<div className={selectedEmployeeError ? 'flex items-center text-red-600 my-2' : 'invisible'}>
+										<div className={`${selectedEmployeeError ? '' : 'invisible'} flex items-center text-red-600 my-2`}>
 											<svg
 												aria-hidden='true'
 												className='flex-shrink-0 inline w-5 h-5 mr-1.5'

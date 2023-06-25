@@ -5,8 +5,6 @@ const prisma = new PrismaClient();
 
 export const POST = async (req: NextRequest) => {
 	const { date, time } = await req.json();
-	console.log(date);
-	console.log(time);
 
 	const trimDate = date.trim();
 

@@ -41,7 +41,7 @@ const Navbar: FC = () => {
 	useEffect(() => {
 		setMounted(true);
 		setLoginedUser(Boolean(sessionStorage.getItem('user-id')));
-		setLogoPath(window.location.href.split('/').length === 4 ? '#' : '/');
+		setLogoPath(window.location.href.split('/')[3] === '' ? '#' : '/');
 
 		const handleResize = () => {
 			window.innerWidth > 1024 ? setMenuIsOpen(true) : setMenuIsOpen(false);

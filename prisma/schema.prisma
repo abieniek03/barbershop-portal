@@ -25,9 +25,10 @@ model Visit {
   id       String @id @default(auto()) @map("_id") @db.ObjectId
   employee String
   userID   String
-  name     String
+  service  String
   date     String
-  time     String
+  hour     String
+  time     Int
 
   @@map("visits")
 }

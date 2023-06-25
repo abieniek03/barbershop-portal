@@ -1,6 +1,5 @@
 import { FC, useState, useEffect, MouseEvent } from 'react';
 import Image from 'next/image';
-import avatar from '@/images/team/Agata.jpg';
 
 interface IEmployeeChoiceButton {
 	firstName?: string;
