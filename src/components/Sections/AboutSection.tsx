@@ -4,10 +4,7 @@ import Image from 'next/image';
 import SectionLayout from '../Layouts/SectionLayout';
 import SectionTitle from './Elements/SectionTitle';
 
-import imageRoman from '../../images/team/Roman.jpg';
-import imageKarim from '../../images/team/Karim.jpg';
-import imageMateusz from '../../images/team/Mateusz.jpg';
-import imageAgata from '../../images/team/Agata.jpg';
+import imageRoman from '../../images/Roman.jpg';
 
 interface ITeamMembers {
 	photo: string;
@@ -19,24 +16,17 @@ const teamMembers: ITeamMembers[] = [
 		photo: imageRoman.src,
 		name: 'Roman',
 		description:
-			'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Accusamus dignissimos id vel, mollitia voluptate ratione suscipit exercitationem dolores. ',
-	},
-
-	{
-		photo: imageAgata.src,
-		name: 'Agata',
-		description:
-			'	Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis tenetur, labore quae repudiandae eligendi delectus consequatur non.',
+			'Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto cupiditate tempora obcaecati ut aspernatur quasi quia voluptatum tempore animi voluptas voluptatibus veritatis numquam quibusdam, vel autem. Amet qui adipisci distinctio sequi necessitatibus doloribus eos a, harum omnis repellendus. Est accusantium eius voluptatibus voluptate quia aliquam corporis totam quam, inventore cupiditate debitis, iure quisquam nulla in. Eligendi odit harum, iusto sunt laboriosam dolorum voluptatum quidem eius voluptate itaque eaque architecto et minima omnis at suscipit commodi.',
 	},
 ];
 
 const TeamSection: FC = () => {
 	return (
 		<SectionLayout>
-			<SectionTitle title='Zespół' id='zespol' />
-			<div className='flex flex-col items-center lg:flex-row'>
+			<SectionTitle title='O mnie' id='o-mnie' />
+			<div className='flex flex-col justify-center items-center lg:flex-row'>
 				{teamMembers.map((el, index) => (
-					<div key={index} className='flex justify-center items-center my-4 w-full sm:mx-4 md:mx-4 lg:mr-4'>
+					<div key={index} className='flex justify-center items-center w-full sm:mx-4 md:mx-4 lg:mr-4'>
 						<Image
 							src={el.photo}
 							alt=''

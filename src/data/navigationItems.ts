@@ -1,11 +1,11 @@
 const navigationItems: { label: string; path: string }[] = [
 	{
-		label: 'Oferta',
-		path: '#oferta',
+		label: 'O mnie',
+		path: '#o-mnie',
 	},
 	{
-		label: 'Zespół',
-		path: '#zespol',
+		label: 'Oferta',
+		path: '#oferta',
 	},
 	{
 		label: 'Zapisy',

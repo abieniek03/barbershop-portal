@@ -4,13 +4,11 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 export const POST = async (req: NextRequest) => {
-	const { date, time } = await req.json();
-
-	const trimDate = date.trim();
+	const { date, hour } = await req.json();
 
 	const allVisits = await prisma.visit.findMany({
 		where: {
-			AND: [{ date: trimDate }, { OR: [{ time }, { time: undefined }] }],
+			AND: [{ date }, { OR: [{ hour }, { hour: undefined }] }],
 		},
 	});
 

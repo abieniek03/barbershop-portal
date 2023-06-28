@@ -3,10 +3,10 @@ import { FC } from 'react';
 import 'react-calendar/dist/Calendar.css';
 import Navbar from '@/components/Navbar/Navbar';
 import HeroSection from '@/components/Sections/HeroSection';
-import SalonsSection from '@/components/Sections/SalonsSection';
+import LocationSection from '@/components/Sections/LocationSection';
 import Layout from '@/components/Layouts/Layout';
+import AboutSection from '@/components/Sections/AboutSection';
 import OfferSection from '@/components/Sections/OfferSection';
-import TeamSection from '@/components/Sections/TeamSection';
 import SaveSection from '@/components/Sections/SaveSection';
 import Footer from '@/components/Footer/Footer';
 
@@ -16,9 +16,9 @@ const Home: FC = () => {
 			<Navbar />
 			<HeroSection />
 			<Layout>
-				<SalonsSection />
+				<LocationSection />
+				<AboutSection />
 				<OfferSection />
-				<TeamSection />
 				<SaveSection />
 			</Layout>
 			<Footer />

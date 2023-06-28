@@ -17,6 +17,9 @@ export interface IServicesItem {
 
 const OfferSection: FC = () => {
 	const [servicesItems, setServicesItems] = useState<IServicesItem[]>();
+	useEffect(() => {
+		console.log(servicesItems);
+	}, [servicesItems]);
 
 	useEffect(() => {
 		const fetchOfferItems = async () => {
@@ -33,17 +36,17 @@ const OfferSection: FC = () => {
 
 	return (
 		<SectionLayout>
-			<div className='lg:flex lg:items-center'>
+			<div className='lg:flex lg:items-center mb-10 lg:mb-0'>
 				<Image
 					src={imageURL}
 					width={500}
 					height={200}
 					alt='Picture of the author'
-					className='mb-10 rounded-lg lg:mb-0 lg:mr-16 w-full lg:max-w-[400px]'
+					className='hidden mb-10 rounded-lg lg:block lg:mb-0 lg:mr-16 w-full lg:max-w-[400px]'
 				/>
 
 				<div>
-					<div className='mb-8'>
+					<div className='mb-24 lg:mb-8'>
 						<SectionTitle title='Oferta' id='oferta' />
 						<p>
 							Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt nisi perspiciatis officiis, cupiditate
@@ -53,7 +56,7 @@ const OfferSection: FC = () => {
 							rem.
 						</p>
 					</div>
-					<div>
+					<div className='min-h-[360px]'>
 						<SectionTitle title='Cennik' />
 						<div className='mt-2'>
 							{servicesItems?.map((el, index) => (

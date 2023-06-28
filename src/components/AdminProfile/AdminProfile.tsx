@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { useStoreDispatch, useStoreSelector } from '@/store/store';
 import { fetchUserData } from '@/store/features/userSlice';
 import { IUserData } from '@/store/features/userSlice';
-import image from '@/images/team/Roman.jpg';
+import image from '@/images/Roman.jpg';
 
 const AdminProfile: FC = () => {
 	const user = useStoreSelector((store: IUserData) => store.user);

@@ -9,8 +9,6 @@ interface IUserProfileIcon {
 }
 
 const UserProfileIcon: FC<IUserProfileIcon> = ({ open, firstName, lastName, admin }) => {
-	console.log(open);
-
 	const itemStyles = 'px-4 py-2 text-left hover:bg-gray-300 dark:hover:bg-gray-800';
 
 	const logout = () => {
@@ -20,8 +18,8 @@ const UserProfileIcon: FC<IUserProfileIcon> = ({ open, firstName, lastName, admi
 
 	return (
 		<div>
-			<button className='relative inline-flex items-center justify-center w-10 h-10 mx-2 overflow-hidden bg-white border border-gray-200 rounded-full dark:bg-primary  dark:border-gray-600 lg:ml-6'>
-				<span className='font-medium text-primary dark:text-white'>
+			<button className='relative inline-flex items-center justify-center w-10 h-10 mx-2 overflow-hidden bg-primary  rounded-full lg:ml-6'>
+				<span className='font-medium text-white'>
 					{firstName.slice(0, 1)}
 					{lastName.slice(0, 1)}
 				</span>
@@ -32,16 +30,14 @@ const UserProfileIcon: FC<IUserProfileIcon> = ({ open, firstName, lastName, admi
 						<p className='bg-primary text-white text-lg font-bold px-4 py-2 pr-10'>
 							{firstName} {lastName}
 						</p>
-						{admin && (
-							<>
-								<Link href='/administrator/dashboard' className={itemStyles}>
-									Dashboard
-								</Link>
-
-								<Link href='/administrator/rejestracja' className={itemStyles}>
-									Dodaj administratora
-								</Link>
-							</>
+						{admin ? (
+							<Link href='/administrator/dashboard' className={itemStyles}>
+								Dashboard
+							</Link>
+						) : (
+							<Link href='/wizyty' className={itemStyles}>
+								Wizyty
+							</Link>
 						)}
 						<Link href='/zmien-dane' className={itemStyles}>
 							Zmień dane

@@ -13,11 +13,7 @@ import globalStyles from '@/styles/global';
 const SaveVisitPage: FC = () => {
 	const visitData = JSON.parse(sessionStorage.getItem('visit-data') || '');
 
-	console.log(visitData);
 	const saveVisit = () => {
-		console.log('zapisano');
-		console.log({ ...visitData, userID: 'wdadwd' });
-
 		const userID = sessionStorage.getItem('user-id');
 
 		axios
@@ -43,8 +39,6 @@ const SaveVisitPage: FC = () => {
 							<p>
 								Termin: {formatFullDate(new Date(visitData.date))}, {visitData.hour}
 							</p>
-
-							<p>Pracownik: {visitData.employee}</p>
 							<p className='mt-2 uppercase'>Płatność kartą lub gotówką w salonie.</p>
 							<div className='flex justify-center items-center my-2'>
 								<button onClick={saveVisit} className={globalStyles.buttonPrimary}>
