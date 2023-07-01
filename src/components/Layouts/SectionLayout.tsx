@@ -1,4 +1,3 @@
-'use client';
 import { FC, ReactNode } from 'react';
 
 const SectionLayout: FC<{ children: ReactNode }> = ({ children }) => {
