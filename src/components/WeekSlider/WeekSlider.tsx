@@ -2,7 +2,7 @@
 import { FC, useState, useEffect, useCallback, useRef, MouseEvent } from 'react';
 import { useRouter } from 'next/navigation';
 
-import { useStoreDispatch, useStoreSelector } from '@/store/store';
+import { useStoreSelector } from '@/store/store';
 
 import Modal from '../Modals/Modal';
 import { LuX, LuArrowLeft, LuArrowRight, LuUser } from 'react-icons/lu';
@@ -25,16 +25,6 @@ export interface IVisitData {
 	hour: string;
 	service: string;
 	time: number;
-}
-
-interface IAdminData {
-	id?: string;
-	email: string;
-	firstName?: string;
-	lastName?: string;
-	password?: string;
-	passwordRepeat?: string;
-	rank: string;
 }
 
 const stylesArrowButton =
@@ -151,7 +141,7 @@ const WeekSlider: FC<{ view: string }> = ({ view }) => {
 
 		const bookedVisitsHour: string[] = [];
 
-		visits.map((el: IVisitData) => {
+		visits.forEach((el: IVisitData) => {
 			bookedVisitsHour.push(allVisitsHour.filter((hour) => hour === el.hour).toString());
 			if (el.time === 60) {
 				bookedVisitsHour.push(allVisitsHour[allVisitsHour.findIndex((hour) => hour === el.hour) + 1].toString());
