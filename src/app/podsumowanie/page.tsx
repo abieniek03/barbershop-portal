@@ -1,16 +1,20 @@
 'use client';
-import { FC } from 'react';
-
-import { formatFullDate } from '@/utils/formatDate';
+import { FC, useState } from 'react';
+import Link from 'next/link';
 
 import Navbar from '@/components/Navbar/Navbar';
 import Layout from '@/components/Layouts/Layout';
 import SectionTitle from '@/components/Sections/Elements/SectionTitle';
+import Modal from '@/components/Modals/Modal';
+
+import { formatFullDate } from '@/utils/formatDate';
 
 import axios from '@/axiosInstance';
+
 import globalStyles from '@/styles/global';
 
 const SaveVisitPage: FC = () => {
+	const [successfullModal, setSuccessfullModal] = useState<boolean>(false);
 	const visitData = JSON.parse(sessionStorage.getItem('visit-data') || '');
 
 	const saveVisit = () => {
@@ -18,8 +22,8 @@ const SaveVisitPage: FC = () => {
 
 		axios
 			.post('/visits/save', { ...visitData, userID })
-			.then((res) => {
-				console.log(res);
+			.then(() => {
+				setSuccessfullModal(true);
 			})
 			.catch((error) => {
 				console.log(error);
@@ -48,6 +52,15 @@ const SaveVisitPage: FC = () => {
 						</div>
 					</div>
 				</div>
+				<Modal visible={successfullModal} title='Zostałeś zapisany'>
+					<div className='max-w-md text-center'>
+						<p>Twoja wyzyta została zarejestrowana. Pamiętaj o przybyciu do salonu w wyznaczonym terminie.</p>
+						<p className='text-lg font-bold mt-2 mb-4'>Do zobaczenia!</p>
+						<Link href='/' className={globalStyles.buttonPrimary}>
+							OK
+						</Link>
+					</div>
+				</Modal>
 			</Layout>
 		</>
 	);

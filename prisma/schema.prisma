@@ -22,12 +22,13 @@ model User {
 }
 
 model Visit {
-  id      String @id @default(auto()) @map("_id") @db.ObjectId
-  userID  String
-  service String
-  date    String
-  hour    String
-  time    Int
+  id           String @id @default(auto()) @map("_id") @db.ObjectId
+  userID       String
+  userFullName String
+  service      String
+  date         String
+  hour         String
+  time         Int
 
   @@map("visits")
 }

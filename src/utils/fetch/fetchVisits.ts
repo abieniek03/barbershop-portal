@@ -5,7 +5,7 @@ const fetchVisits = (params: { [key: string]: string }) => {
 		.post('/visits/select', params)
 		.then((res) => res.data)
 		.catch(() => {
-			const errorInfo = 'Nie znaleziono';
+			const errorInfo: string = 'Nie znaleziono';
 			return errorInfo;
 		});
 

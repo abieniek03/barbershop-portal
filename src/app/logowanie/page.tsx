@@ -46,22 +46,32 @@ const LoginPage: FC = () => {
 
 	const handleLogin = (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		setLoadingProcess(true);
 
-		axios
-			.post('/auth/login', userData)
-			.then((res) => {
-				setLoadingProcess(false);
-				console.log(res);
-				sessionStorage.setItem('auth-token', res.data.authToken);
-				sessionStorage.setItem('user-id', res.data.user.id);
-				router.push(navigateAuthUser(res.data.user.rank));
-			})
-			.catch((error) => {
-				setLoadingProcess(false);
-				setErrorCommunicate(error.response.data.communicate);
-			});
+		if (userData.email === '' || userData.password === '') {
+			setErrorCommunicate('Uzupełnij wszystkie dane');
+		} else {
+			setLoadingProcess(true);
+			axios
+				.post('/auth/login', userData)
+				.then((res) => {
+					setLoadingProcess(false);
+					sessionStorage.setItem('auth-token', res.data.authToken);
+					sessionStorage.setItem('user-id', res.data.user.id);
+					router.push(navigateAuthUser(res.data.user.rank));
+				})
+				.catch((error) => {
+					setLoadingProcess(false);
+					setErrorCommunicate(error.response.data.communicate);
+				});
+		}
 	};
+
+	useEffect(() => {
+		if (sessionStorage.getItem('auth-token')) {
+			router.push('/');
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
 	return (
 		<div className={globalStyles.container}>

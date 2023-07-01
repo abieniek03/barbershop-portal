@@ -1,4 +1,5 @@
-import { FC } from 'react';
+'use client';
+import { FC, useEffect } from 'react';
 
 import 'react-calendar/dist/Calendar.css';
 import Navbar from '@/components/Navbar/Navbar';
@@ -11,6 +12,12 @@ import SaveSection from '@/components/Sections/SaveSection';
 import Footer from '@/components/Footer/Footer';
 
 const Home: FC = () => {
+	useEffect(() => {
+		if (sessionStorage.getItem('visit-data')) {
+			sessionStorage.removeItem('visit-data');
+		}
+	}, []);
+
 	return (
 		<>
 			<Navbar />

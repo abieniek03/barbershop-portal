@@ -1,19 +1,21 @@
 'use client';
 
-import { FC, useState, ChangeEvent, FormEvent } from 'react';
+import { FC, useState, useEffect, ChangeEvent, FormEvent } from 'react';
 
 import SwitchThemeButton from '@/components/Theme/SwitchThemeButton';
 import FormHeading from '@/components/Form/FormHeading';
 import FormInput from '@/components/Form/FormInput';
 import Button from '@/components/Buttons/Button';
 import LoadingButton from '@/components/Buttons/LoadingButton';
-
-import axios from '../../axiosInstance';
 import ErrorAlert from '@/components/Alerts/ErrorAlert';
 
+import axios from '../../axiosInstance';
+
 import globalStyles from '@/styles/global';
+import { useRouter } from 'next/router';
 
 const RecoveryPage: FC = () => {
+	const router = useRouter();
 	const [verification, setVerification] = useState<boolean>(false);
 	const [loadingProcess, setLoadingProcess] = useState<boolean>(false);
 	const [errorCommunicate, setErrorCommunicate] = useState<string>('');
@@ -21,20 +23,29 @@ const RecoveryPage: FC = () => {
 
 	const handleRecovery = (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		setLoadingProcess(true);
 
-		axios
-			.post('/auth/recovery', { email })
-			.then((res) => {
-				console.log(res);
-				setVerification(true);
-			})
-			.catch((error) => {
-				// console.error(error.response.data.communicate);
-				setLoadingProcess(false);
-				setErrorCommunicate(error.response.data.communicate);
-			});
+		if (email === '') {
+			setErrorCommunicate('Podaj adres mailowy');
+		} else {
+			setLoadingProcess(true);
+			axios
+				.post('/auth/recovery', { email })
+				.then(() => {
+					setVerification(true);
+				})
+				.catch((error) => {
+					setLoadingProcess(false);
+					setErrorCommunicate(error.response.data.communicate);
+				});
+		}
 	};
+
+	useEffect(() => {
+		if (sessionStorage.getItem('auth-token')) {
+			router.push('/');
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
 	return (
 		<div className={globalStyles.container}>

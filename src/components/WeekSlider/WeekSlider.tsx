@@ -3,15 +3,12 @@ import { FC, useState, useEffect, useCallback, useRef, MouseEvent } from 'react'
 import { useRouter } from 'next/navigation';
 
 import { useStoreDispatch, useStoreSelector } from '@/store/store';
-import { fetchUserData } from '@/store/features/userSlice';
 
 import Modal from '../Modals/Modal';
-import EmployeeChoiceButton from '../Buttons/EmployeeChoiceButton';
-import { LuX } from 'react-icons/lu';
+import { LuX, LuArrowLeft, LuArrowRight, LuUser } from 'react-icons/lu';
 
 import fetchVisits from '@/utils/fetch/fetchVisits';
 import fetchServices from '@/utils/fetch/fetchServices';
-import axios from '@/axiosInstance';
 
 import { IUserData } from '@/store/features/userSlice';
 import { IServicesItem } from '@/components/Sections/OfferSection';
@@ -20,8 +17,10 @@ import { formatDay, formatDate, formatFullDate } from '@/utils/formatDate';
 import globalStyles from '@/styles/global';
 import LoadingAnimation from '../Animations/LoadingAnimation';
 
-interface IVisitData {
+export interface IVisitData {
 	id?: string;
+	userID: string;
+	userFullName: string;
 	date: string;
 	hour: string;
 	service: string;
@@ -38,6 +37,9 @@ interface IAdminData {
 	rank: string;
 }
 
+const stylesArrowButton =
+	'absolute z-0 top-[70px] bg-neutral-100 dark:bg-gray-700 text-primary dark:text-white text-4xl p-2 rounded-full';
+
 const WeekSlider: FC<{ view: string }> = ({ view }) => {
 	const router = useRouter();
 	const [loading, setLoading] = useState<boolean>(true);
@@ -47,6 +49,8 @@ const WeekSlider: FC<{ view: string }> = ({ view }) => {
 	const [choiceModal, setChoiceModal] = useState<boolean>(false);
 	const [currentFullDate, setCurrentFullDate] = useState<string>('');
 	const [visitData, setVisitData] = useState<IVisitData>({
+		userID: '',
+		userFullName: '',
 		date: '10 Jun 2023',
 		hour: '',
 		service: '',
@@ -115,6 +119,17 @@ const WeekSlider: FC<{ view: string }> = ({ view }) => {
 		setCalendar(tempCalendar);
 	}, [date]);
 
+	const horizontalScroll = (direction: string) => {
+		const container = document.querySelector('#elo');
+		if (container) {
+			if (direction === 'right') {
+				container.scrollBy(200, 0);
+			} else {
+				container.scrollBy(-200, 0);
+			}
+		}
+	};
+
 	const handleDate = (selectedDate: Date) => selectedDate.toDateString().substring(4, 15);
 
 	const handleCurrentDate = () => {
@@ -168,9 +183,13 @@ const WeekSlider: FC<{ view: string }> = ({ view }) => {
 		document.body.classList.remove('overflow-hidden');
 		const service = e.currentTarget.getAttribute('data-service') || '';
 		const time = Number(e.currentTarget.getAttribute('data-time'));
-		console.log('siema');
 
-		setVisitData((prevState) => ({ ...prevState, service, time }));
+		setVisitData((prevState) => ({
+			...prevState,
+			userFullName: `${user.firstName} ${user.lastName}`,
+			service,
+			time,
+		}));
 
 		if (sessionStorage.getItem('auth-token')) {
 			router.push('/podsumowanie');
@@ -180,7 +199,7 @@ const WeekSlider: FC<{ view: string }> = ({ view }) => {
 	};
 
 	useEffect(() => {
-		getVisits(new Date().toDateString().substring(4, 15));
+		getVisits(handleCurrentDate());
 
 		const fetchOfferItems = async () => {
 			try {
@@ -215,14 +234,28 @@ const WeekSlider: FC<{ view: string }> = ({ view }) => {
 	return (
 		<>
 			{loading ? (
-				<LoadingAnimation label='Wczytywanie' />
+				<div className='mt-8'>
+					<LoadingAnimation label='Wczytywanie' />
+				</div>
 			) : (
 				<div>
 					<div>
+						<div className='relative z-0'>
+							<button>
+								<LuArrowLeft
+									className={`${stylesArrowButton} -left-6 lg:-left-10`}
+									onClick={() => horizontalScroll('left')}
+								/>
+								<LuArrowRight
+									className={`${stylesArrowButton} -right-6 lg:-right-10`}
+									onClick={() => horizontalScroll('right')}
+								/>
+							</button>
+						</div>
 						<p className='text-gray-800 dark:text-neutral-300 text-center text-lg font-bold'>
 							{monthsNames[new Date(visitData.date).getMonth()]}
 						</p>
-						<div className='flex overflow-x-scroll cursor-pointer mt-3'>
+						<div className='flex overflow-hidden cursor-pointer pb-3 mt-3 border-b border-gray-200 dark:border-gray-600 scroll-smooth'>
 							{calendar.map((el, index) => (
 								<button
 									key={index}
@@ -247,7 +280,20 @@ const WeekSlider: FC<{ view: string }> = ({ view }) => {
 					{view === 'admin' ? (
 						<>
 							<div>
-								<h1>tu coś się zrobi</h1>
+								{visits && visits.length !== 0 ? (
+									visits.map((el, index) => (
+										<div key={index} className={globalStyles.visitItem}>
+											<p className={globalStyles.visitItemTitle}>{el.service}</p>
+											<p>{el.hour}</p>
+											<p className='mt-2 flex items-center'>
+												<LuUser className='mr-2 text-lg' />
+												{el.userFullName}
+											</p>
+										</div>
+									))
+								) : (
+									<p className='text-center mt-4'>Brak wizyt w tym terminie.</p>
+								)}
 							</div>
 						</>
 					) : (

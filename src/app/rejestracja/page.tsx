@@ -1,6 +1,6 @@
 'use client';
 
-import { FC, useState, ChangeEvent, FormEvent } from 'react';
+import { FC, useState, ChangeEvent, FormEvent, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 
 import SwitchThemeButton from '@/components/Theme/SwitchThemeButton';
@@ -14,8 +14,8 @@ import ErrorAlert from '@/components/Alerts/ErrorAlert';
 import axios from '../../axiosInstance';
 import navigateAuthUser from '@/utils/auth/navigateAuthUser';
 
-import globalStyles from '@/styles/global';
 import { IUserData } from '@/store/features/userSlice';
+import globalStyles from '@/styles/global';
 
 const RegisterPage: FC = () => {
 	const router = useRouter();
@@ -61,23 +61,39 @@ const RegisterPage: FC = () => {
 
 	const handleRegister = (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		setLoadingProcess(true);
 
-		axios
-			.post('/auth/register', userData.user)
-			.then((res) => {
-				setLoadingProcess(false);
-				console.log(res);
-				sessionStorage.setItem('auth-token', res.data.authToken);
-				sessionStorage.setItem('user-id', res.data.newUser.id);
-				router.push(navigateAuthUser(res.data.newUser.rank));
-			})
-			.catch((error) => {
-				console.log(error);
-				setLoadingProcess(false);
-				setErrorCommunicate(error.response.data.communicate);
-			});
+		if (
+			userData.user.email === '' ||
+			userData.user.firstName === '' ||
+			userData.user.lastName === '' ||
+			userData.user.password === '' ||
+			userData.user.passwordRepeat === ''
+		) {
+			setErrorCommunicate('Uzupełnij wszystkie pola.');
+		} else {
+			setLoadingProcess(true);
+			axios
+				.post('/auth/register', userData.user)
+				.then((res) => {
+					setLoadingProcess(false);
+					sessionStorage.setItem('auth-token', res.data.authToken);
+					sessionStorage.setItem('user-id', res.data.newUser.id);
+					router.push(navigateAuthUser(res.data.newUser.rank));
+				})
+				.catch((error) => {
+					console.log(error);
+					setLoadingProcess(false);
+					setErrorCommunicate(error.response.data.communicate);
+				});
+		}
 	};
+
+	useEffect(() => {
+		if (sessionStorage.getItem('auth-token')) {
+			router.push('/');
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
 	return (
 		<div className={globalStyles.container}>
