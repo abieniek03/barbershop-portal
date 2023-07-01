@@ -19,6 +19,7 @@ import globalStyles from '@/styles/global';
 
 const RegisterPage: FC = () => {
 	const router = useRouter();
+	const [mounted, setMounted] = useState<boolean>(false);
 	const [loadingProcess, setLoadingProcess] = useState<boolean>(false);
 	const [errorCommunicate, setErrorCommunicate] = useState<string>('');
 
@@ -89,6 +90,7 @@ const RegisterPage: FC = () => {
 	};
 
 	useEffect(() => {
+		setMounted(true);
 		if (sessionStorage.getItem('auth-token')) {
 			router.push('/');
 		}

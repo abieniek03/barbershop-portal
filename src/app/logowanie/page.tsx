@@ -23,6 +23,7 @@ interface IUserData {
 
 const LoginPage: FC = () => {
 	const router = useRouter();
+	const [mounted, setMounted] = useState<boolean>(false);
 	const [loadingProcess, setLoadingProcess] = useState<boolean>(false);
 	const [errorCommunicate, setErrorCommunicate] = useState<string>('');
 
@@ -67,6 +68,7 @@ const LoginPage: FC = () => {
 	};
 
 	useEffect(() => {
+		setMounted(true);
 		if (sessionStorage.getItem('auth-token')) {
 			router.push('/');
 		}
