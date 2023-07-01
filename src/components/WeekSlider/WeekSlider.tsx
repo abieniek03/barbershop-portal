@@ -57,12 +57,9 @@ const WeekSlider: FC<{ view: string }> = ({ view }) => {
 		time: 0,
 	});
 	const [servicesItems, setServicesItems] = useState<IServicesItem[]>();
-	const [selectedEmployeeError, setSelectedEmployeeError] = useState<boolean>(false);
-	const [allEmployees, setAllEmployees] = useState<IAdminData[]>();
 
 	const visitDataRef = useRef<IVisitData>(visitData);
 
-	const dispatch = useStoreDispatch();
 	const user = useStoreSelector((store: IUserData) => store.user);
 
 	const [date] = useState(new Date());
