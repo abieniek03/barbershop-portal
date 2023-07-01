@@ -1,6 +1,6 @@
 'use client';
-
 import { FC, useState, useEffect, ChangeEvent, FormEvent } from 'react';
+import { useRouter } from 'next/navigation';
 
 import SwitchThemeButton from '@/components/Theme/SwitchThemeButton';
 import FormHeading from '@/components/Form/FormHeading';
@@ -12,10 +12,11 @@ import ErrorAlert from '@/components/Alerts/ErrorAlert';
 import axios from '../../axiosInstance';
 
 import globalStyles from '@/styles/global';
-import { useRouter } from 'next/router';
 
 const RecoveryPage: FC = () => {
 	const router = useRouter();
+
+	const [mounted, setMounted] = useState<boolean>(false);
 	const [verification, setVerification] = useState<boolean>(false);
 	const [loadingProcess, setLoadingProcess] = useState<boolean>(false);
 	const [errorCommunicate, setErrorCommunicate] = useState<string>('');
@@ -41,9 +42,11 @@ const RecoveryPage: FC = () => {
 	};
 
 	useEffect(() => {
-		if (sessionStorage.getItem('auth-token')) {
+		setMounted(true);
+		if (mounted && sessionStorage.getItem('auth-token')) {
 			router.push('/');
 		}
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 

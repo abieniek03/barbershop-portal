@@ -63,8 +63,7 @@ const RecoveryPage: FC = () => {
 		if (userData.newPassword === '' || userData.repeatNewPassword === '') {
 			setErrorCommunicate('Wypełnij wszystkie pola');
 		} else if (userData.newPassword !== userData.repeatNewPassword) {
-			console.log('hasła nie są takie same');
-			setErrorCommunicate('Hasła nie są takie same');
+			setErrorCommunicate('Hasła nie są takie same.');
 		} else {
 			setErrorCommunicate('');
 			setLoadingProcess(true);
