@@ -17,7 +17,7 @@ export const POST = async (req: NextRequest) => {
 
 	if (!user) return NextResponse.json({ communicate: 'Nie ma takiego użytkownika.' }, { status: 404 });
 
-	if (bcrypt.compareSync(password, user.hashedPassword)) {
+	if (bcrypt.compareSync(password, user.hashedPassword || '')) {
 		const authToken = generateAuthToken({ email, password });
 
 		return NextResponse.json({ user, authToken });
