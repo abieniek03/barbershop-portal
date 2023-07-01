@@ -1,5 +1,4 @@
 'use client';
-import { Metadata } from 'next';
 
 import { useEffect, useState } from 'react';
 import { fetchUserData } from '@/store/features/userSlice';
@@ -11,11 +10,6 @@ import store from '../store/store';
 import '../globals.css';
 
 const inter = Inter({ subsets: ['latin'] });
-
-export const metadata: Metadata = {
-	title: '...',
-	description: '...',
-};
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
 	const [mounted, setMounted] = useState<boolean>(false);
