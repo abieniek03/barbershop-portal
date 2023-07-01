@@ -1,20 +1,51 @@
 <mjml>
-	<mj-body>
-		<mj-section>
-			<mj-column>
-				<mj-text font-size="20px" align="center" color="#06b6d4" font-weight="bold"> Hairdresser portal </mj-text>
-				<mj-divider border-color="#06b6d4" border-width="1px"></mj-divider>
-
-				<mj-text padding-top="20px" font-size="16px" color="#06b6d4" font-family="montserrat">Witamy serdecznie!👋</mj-text>
-				<mj-text font-size="16px" color="#06b6d4" font-family="montserrat"
-					>Weryfikacja użytkownika przebiegła pomyślnie. Możesz ustawić nowe hasło.</mj-text
-				>
-				<mj-button padding-bottom="20px" align="left" font-family="montserrat" background-color="#06b6d4" color="white">
-					Ustaw nowe hasło
-				</mj-button>
-
-				<mj-divider border-color="#06b6d4" border-width="1px"></mj-divider>
-
+	<mj-head>
+		<mj-title>Discount Light</mj-title>
+		<mj-preview>Pre-header Text</mj-preview>
+		<mj-attributes>
+			<mj-all font-family="'Helvetica Neue', Helvetica, Arial, sans-serif"></mj-all>
+			<mj-text
+				font-weight="400"
+				font-size="16px"
+				color="#000000"
+				line-height="24px"
+				font-family="'Helvetica Neue', Helvetica, Arial, sans-serif"
+			></mj-text>
+		</mj-attributes>
+		<mj-style inline="inline">
+			.body-section { -webkit-box-shadow: 1px 4px 11px 0px rgba(0, 0, 0, 0.15); -moz-box-shadow: 1px 4px 11px 0px
+			rgba(0, 0, 0, 0.15); box-shadow: 1px 4px 11px 0px rgba(0, 0, 0, 0.15); }
+		</mj-style>
+		<mj-style inline="inline"> .text-link { color: #5e6ebf } </mj-style>
+		<mj-style inline="inline"> .footer-link { color: #888888 } </mj-style>
+	</mj-head>
+	<mj-body width="600px">
+		<mj-section full-width="full-width" background-color="#9333ea" padding-bottom="0">
+			<mj-column width="100%">
+				<mj-image
+					src="https://images.pexels.com/photos/14781974/pexels-photo-14781974.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+					width="600px"
+					alt=""
+					padding="0"
+					href="https://barbershop.abwebproject.com"
+				/>
+			</mj-column>
 		</mj-section>
+
+		<mj-wrapper padding-top="0" padding-bottom="0" css-class="body-section">
+			<mj-section padding-left="15px" padding-right="15px">
+				<mj-column width="100%">
+					<mj-text font-weight="bold" font-size="20px"> Odzyskaj swoje konto </mj-text>
+					<mj-text font-size="16px"> Witaj, </mj-text>
+					<mj-text font-size="16px"> wygląda na to, że chcesz odzyskać swoje konto. Zresetuj swoje hasło. </mj-text>
+					<mj-text font-size="16px">
+						Kliknij w poniższy przycisk. Zostaniesz przekierowany na stonę, gdzie ustawisz nowe hasło dla swojego konta.
+					</mj-text>
+					          <mj-button background-color="#9333ea" align="center" color="#ffffff" font-size="17px" font-weight="bold" href="https://google.com" width="300px">
+            Zresetuj hasło
+          </mj-button>
+				</mj-column>
+			</mj-section>
+		</mj-wrapper>
 	</mj-body>
 </mjml>
