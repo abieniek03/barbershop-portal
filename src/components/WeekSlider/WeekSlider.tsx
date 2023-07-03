@@ -140,7 +140,6 @@ const WeekSlider: FC<{ view: string }> = ({ view }) => {
 		setVisits(visits);
 
 		const bookedVisitsHour: string[] = [];
-
 		visits.forEach((el: IVisitData) => {
 			bookedVisitsHour.push(allVisitsHour.filter((hour) => hour === el.hour).toString());
 			if (el.time === 60) {

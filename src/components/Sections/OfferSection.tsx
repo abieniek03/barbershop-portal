@@ -16,7 +16,7 @@ export interface IServicesItem {
 }
 
 const OfferSection: FC = () => {
-	const [servicesItems, setServicesItems] = useState<IServicesItem[]>();
+	const [servicesItems, setServicesItems] = useState<IServicesItem[]>([]);
 
 	useEffect(() => {
 		const fetchOfferItems = async () => {

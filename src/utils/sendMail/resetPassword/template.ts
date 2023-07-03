@@ -5,7 +5,8 @@ const mailTemplate = (userID: string) => {
 		return year;
 	};
 
-	const resetLink = `https://barbershop.abwebproject.com/odzyskiwanie/${userID}`;
+	const resetLink = `http://localhost:3000/odzyskiwanie/${userID}`;
+	// const resetLink = `https://barbershop.abwebproject.com/odzyskiwanie/${userID}`;
 
 	return `
   <!doctype html>
@@ -210,7 +211,7 @@ const mailTemplate = (userID: string) => {
           </tbody>
           <tfoot>
             <tr>
-              <td style="mso-padding-alt:10px"> 
+              <td align="center" style="mso-padding-alt:10px"> 
                 Barbershop &copy; - ${getCurrentYear()}
               </td>
             </tr>
