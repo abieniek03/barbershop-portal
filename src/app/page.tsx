@@ -1,7 +1,6 @@
 'use client';
 import { FC, useEffect } from 'react';
 
-import 'react-calendar/dist/Calendar.css';
 import Navbar from '@/components/Navbar/Navbar';
 import HeroSection from '@/components/Sections/HeroSection';
 import LocationSection from '@/components/Sections/LocationSection';
