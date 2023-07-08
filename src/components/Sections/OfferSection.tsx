@@ -16,7 +16,14 @@ export interface IServicesItem {
 }
 
 const OfferSection: FC = () => {
-	const [servicesItems, setServicesItems] = useState<IServicesItem[]>([]);
+	const [servicesItems, setServicesItems] = useState<IServicesItem[]>([
+		{
+			name: '',
+			price: 0,
+			time: '',
+			info: '',
+		},
+	]);
 
 	useEffect(() => {
 		const fetchOfferItems = async () => {
@@ -30,6 +37,11 @@ const OfferSection: FC = () => {
 
 		fetchOfferItems();
 	}, []);
+
+	useEffect(() => {
+		console.log(typeof servicesItems);
+		console.log(typeof Array(servicesItems));
+	}, [servicesItems]);
 
 	return (
 		<SectionLayout>
@@ -57,11 +69,11 @@ const OfferSection: FC = () => {
 						<SectionTitle title='Cennik' />
 						<div className='mt-2'>
 							{servicesItems &&
-								servicesItems.map((el, index) => (
+								servicesItems.map((el: IServicesItem, index) => (
 									<div key={index} className='flex justify-between mb-8'>
 										<div className='max-w-[350px]'>
 											<p className='text-xl font-bold'>{el.name}</p>
-											<p className='text-sm text-gray-800 dark:text-neutral-200'> {el.info}</p>
+											<p className='text-sm text-gray-800 dark:text-neutral-200'>{el.info}</p>
 										</div>
 										<p className='text-xl font-bold text-primary'>{el.price}PLN</p>
 									</div>
