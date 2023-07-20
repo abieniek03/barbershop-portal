@@ -61,10 +61,10 @@ const OfferSection: FC = () => {
 							rem.
 						</p>
 					</div>
-					{/* <div className='min-h-[360px]'>
+					<div className='min-h-[360px]'>
 						<SectionTitle title='Cennik' />
 						<div className='mt-2'>
-							{servicesItems.map((el, index) => (
+							{servicesItems?.map((el, index) => (
 								<div key={index} className='flex justify-between mb-8'>
 									<div className='max-w-[350px]'>
 										<p className='text-xl font-bold'>{el.name}</p>
@@ -74,7 +74,7 @@ const OfferSection: FC = () => {
 								</div>
 							))}
 						</div>
-					</div> */}
+					</div>
 				</div>
 			</div>
 		</SectionLayout>
