@@ -32,10 +32,10 @@ const OfferSection: FC = () => {
 		const fetchOfferItems = async () => {
 			try {
 				const data = await fetchServices();
-				setLoading(false);
+				// setLoading(false);
 				setServicesItems(data);
 			} catch (error) {
-				setLoading(false);
+				// setLoading(false);
 				console.error('Błąd podczas pobierania usług:', error);
 			}
 		};
