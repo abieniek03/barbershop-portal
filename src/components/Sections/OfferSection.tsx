@@ -64,15 +64,19 @@ const OfferSection: FC = () => {
 					<div className='min-h-[360px]'>
 						<SectionTitle title='Cennik' />
 						<div className='mt-2'>
-							{servicesItems?.map((el, index) => (
-								<div key={index} className='flex justify-between mb-8'>
-									<div className='max-w-[350px]'>
-										<p className='text-xl font-bold'>{el.name}</p>
-										<p className='text-sm text-gray-800 dark:text-neutral-200'>{el.info}</p>
+							{servicesItems.length > 1 ? (
+								servicesItems.map((el, index) => (
+									<div key={index} className='flex justify-between mb-8'>
+										<div className='max-w-[350px]'>
+											<p className='text-xl font-bold'>{el.name}</p>
+											<p className='text-sm text-gray-800 dark:text-neutral-200'>{el.info}</p>
+										</div>
+										<p className='text-xl font-bold text-primary'>{el.price}PLN</p>
 									</div>
-									<p className='text-xl font-bold text-primary'>{el.price}PLN</p>
-								</div>
-							))}
+								))
+							) : (
+								<p className='text-primary text-center font-bold font-3xl'>. . .</p>
+							)}
 						</div>
 					</div>
 				</div>
