@@ -22,7 +22,8 @@
 		"eslint-config-next": "13.4.4",
 		"jsonwebtoken": "^9.0.0",
 		"mjml": "^4.14.1",
-		"mongoose": "^7.2.2",
+		"prisma": "^4.15.0",
+
 		"next": "13.4.4",
 		"next-themes": "^0.2.1",
 		"nodemailer": "^6.9.3",
@@ -38,7 +39,6 @@
 		"@types/bcrypt": "^5.0.0",
 		"@types/jsonwebtoken": "^9.0.2",
 		"@types/mongoose": "^5.11.97",
-		"@types/nodemailer": "^6.4.8",
-		"prisma": "^4.15.0"
+		"@types/nodemailer": "^6.4.8"
 	}
 }
