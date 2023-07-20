@@ -5,6 +5,7 @@ import Image from 'next/image';
 
 import SectionLayout from '../Layouts/SectionLayout';
 import SectionTitle from './Elements/SectionTitle';
+import LoadingAnimation from '../Animations/LoadingAnimation';
 
 import imageURL from '../../images/offer.jpg';
 import fetchServices from '@/utils/fetch/fetchServices';
@@ -17,9 +18,10 @@ export interface IServicesItem {
 }
 
 const OfferSection: FC = () => {
+	const [loading, setLoading] = useState(true);
 	const [servicesItems, setServicesItems] = useState<IServicesItem[]>([
 		{
-			name: 'Strzyżenie',
+			name: '',
 			price: 0,
 			time: 0,
 			info: '',
@@ -30,8 +32,10 @@ const OfferSection: FC = () => {
 		const fetchOfferItems = async () => {
 			try {
 				const data = await fetchServices();
+				setLoading(false);
 				setServicesItems(data);
 			} catch (error) {
+				setLoading(false);
 				console.error('Błąd podczas pobierania usług:', error);
 			}
 		};
@@ -64,7 +68,7 @@ const OfferSection: FC = () => {
 					<div className='min-h-[360px]'>
 						<SectionTitle title='Cennik' />
 						<div className='mt-2'>
-							{servicesItems.length > 1 ? (
+							{!loading ? (
 								servicesItems.map((el, index) => (
 									<div key={index} className='flex justify-between mb-8'>
 										<div className='max-w-[350px]'>
@@ -75,7 +79,7 @@ const OfferSection: FC = () => {
 									</div>
 								))
 							) : (
-								<p className='text-primary text-center font-bold font-3xl'>. . .</p>
+								<LoadingAnimation label='Wczytywanie' />
 							)}
 						</div>
 					</div>
