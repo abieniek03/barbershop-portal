@@ -1,4 +1,5 @@
 'use client';
+
 import { FC, useState, useEffect } from 'react';
 import Image from 'next/image';
 
@@ -60,7 +61,7 @@ const OfferSection: FC = () => {
 							rem.
 						</p>
 					</div>
-					<div className='min-h-[360px]'>
+					{/* <div className='min-h-[360px]'>
 						<SectionTitle title='Cennik' />
 						<div className='mt-2'>
 							{servicesItems.map((el, index) => (
@@ -73,7 +74,7 @@ const OfferSection: FC = () => {
 								</div>
 							))}
 						</div>
-					</div>
+					</div> */}
 				</div>
 			</div>
 		</SectionLayout>
