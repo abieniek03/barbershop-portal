@@ -12,16 +12,16 @@ import fetchServices from '@/utils/fetch/fetchServices';
 export interface IServicesItem {
 	name: string;
 	price: number;
-	time: string;
+	time: number;
 	info: string;
 }
 
 const OfferSection: FC = () => {
 	const [servicesItems, setServicesItems] = useState<IServicesItem[]>([
 		{
-			name: '',
+			name: 'Strzyżenie',
 			price: 0,
-			time: '',
+			time: 0,
 			info: '',
 		},
 	]);
