@@ -3,6 +3,8 @@
 import { FC, useState, ChangeEvent, FormEvent, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 
+import AuthRedirector from '@/hoc/AuthRedirector';
+
 import SwitchThemeButton from '@/components/Theme/SwitchThemeButton';
 import FormHeading from '@/components/Form/FormHeading';
 import FormInput from '@/components/Form/FormInput';
@@ -67,39 +69,33 @@ const LoginPage: FC = () => {
 		}
 	};
 
-	useEffect(() => {
-		setMounted(true);
-		if (sessionStorage.getItem('auth-token')) {
-			router.push('/');
-		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
-
 	return (
-		<div className={globalStyles.container}>
-			<SwitchThemeButton customStyles='absolute top-7 right-7' />
+		<AuthRedirector>
+			<div className={globalStyles.container}>
+				<SwitchThemeButton customStyles='absolute top-7 right-7' />
 
-			<form className='w-full max-w-[360px]' onSubmit={handleLogin}>
-				<FormHeading title='Logowanie' />
-				{formFields.map((el, index) => (
-					<FormInput
-						label={el.label}
-						id={el.id}
-						key={index}
-						type={el.type}
-						onChange={(e: ChangeEvent<HTMLInputElement>) =>
-							setUserData((prevState) => ({ ...prevState, [e.target.id]: e.target.value }))
-						}
-					/>
-				))}
+				<form className='w-full max-w-[360px]' onSubmit={handleLogin}>
+					<FormHeading title='Logowanie' />
+					{formFields.map((el, index) => (
+						<FormInput
+							label={el.label}
+							id={el.id}
+							key={index}
+							type={el.type}
+							onChange={(e: ChangeEvent<HTMLInputElement>) =>
+								setUserData((prevState) => ({ ...prevState, [e.target.id]: e.target.value }))
+							}
+						/>
+					))}
 
-				{errorCommunicate !== '' && <ErrorAlert title={errorCommunicate} />}
-				{!loadingProcess ? <Button onClick={handleLogin} label='Zaloguj się' /> : <LoadingButton label='Logowanie' />}
-			</form>
-			<LinkButton path='/odzyskiwanie' label='Nie pamiętam hasła' />
-			<span className='w-full max-w-[360px] border my-2 dark:border-gray-600'></span>
-			<LinkButton path='/rejestracja' label='Nie masz jeszcze konta? Zarejestruj się.' />
-		</div>
+					{errorCommunicate !== '' && <ErrorAlert title={errorCommunicate} />}
+					{!loadingProcess ? <Button onClick={handleLogin} label='Zaloguj się' /> : <LoadingButton label='Logowanie' />}
+				</form>
+				<LinkButton path='/odzyskiwanie' label='Nie pamiętam hasła' />
+				<span className='w-full max-w-[360px] border my-2 dark:border-gray-600'></span>
+				<LinkButton path='/rejestracja' label='Nie masz jeszcze konta? Zarejestruj się.' />
+			</div>
+		</AuthRedirector>
 	);
 };
 

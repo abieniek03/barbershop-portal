@@ -1,7 +1,7 @@
 'use client';
 import { FC, useState, useEffect } from 'react';
 import Link from 'next/link';
-
+import { useRouter } from 'next/navigation';
 import Navbar from '@/components/Navbar/Navbar';
 import Layout from '@/components/Layouts/Layout';
 import SectionTitle from '@/components/Sections/Elements/SectionTitle';
@@ -14,6 +14,7 @@ import axios from '@/axiosInstance';
 import globalStyles from '@/styles/global';
 
 const SaveVisitPage: FC = () => {
+	const router = useRouter();
 	const [mounted, setMounted] = useState<boolean>(false);
 	const [visitData, setVisitData] = useState<IVisitData>();
 	const [successfullModal, setSuccessfullModal] = useState<boolean>(false);
@@ -32,10 +33,14 @@ const SaveVisitPage: FC = () => {
 	};
 
 	useEffect(() => {
-		setMounted(true);
+		if (!sessionStorage.getItem('visit-data') || !sessionStorage.getItem('auth-token')) {
+			router.push('/');
+		}
+		setMounted(true); 
 		if (mounted) {
 			setVisitData(JSON.parse(sessionStorage.getItem('visit-data') || ''));
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [mounted, visitData]);
 
 	return (

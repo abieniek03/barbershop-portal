@@ -2,6 +2,8 @@
 import { FC, useCallback, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 
+import AuthRedirector from '@/hoc/AuthRedirector';
+
 import Navbar from '@/components/Navbar/Navbar';
 import Layout from '@/components/Layouts/Layout';
 import WeekSlider from '@/components/WeekSlider/WeekSlider';
@@ -24,12 +26,12 @@ const DashboardPage: FC = () => {
 	}, [navigateUnauthorizedUser]);
 
 	return (
-		<>
+		<AuthRedirector>
 			<Navbar />
 			<Layout>
 				<WeekSlider view='admin' />
 			</Layout>
-		</>
+		</AuthRedirector>
 	);
 };
 

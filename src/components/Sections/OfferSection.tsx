@@ -69,7 +69,7 @@ const OfferSection: FC = () => {
 						<SectionTitle title='Cennik' />
 						<div className='mt-2'>
 							{!loading ? (
-								servicesItems.map((el, index) => (
+								servicesItems?.map((el, index) => (
 									<div key={index} className='flex justify-between mb-8'>
 										<div className='max-w-[350px]'>
 											<p className='text-xl font-bold'>{el.name}</p>

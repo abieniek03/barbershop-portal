@@ -3,6 +3,8 @@
 import { FC, useState, ChangeEvent, FormEvent, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 
+import AuthRedirector from '@/hoc/AuthRedirector';
+
 import SwitchThemeButton from '@/components/Theme/SwitchThemeButton';
 import FormHeading from '@/components/Form/FormHeading';
 import FormInput from '@/components/Form/FormInput';
@@ -89,39 +91,36 @@ const RegisterPage: FC = () => {
 		}
 	};
 
-	useEffect(() => {
-		setMounted(true);
-		if (sessionStorage.getItem('auth-token')) {
-			router.push('/');
-		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
-
 	return (
-		<div className={globalStyles.container}>
-			<SwitchThemeButton customStyles='absolute top-7 right-7' />
-			<form className='w-full max-w-[360px]' onSubmit={handleRegister}>
-				<FormHeading title='Rejestracja' />
-				{formFields.map((el, index) => (
-					<FormInput
-						key={index}
-						label={el.label}
-						id={el.id}
-						type={el.type}
-						onChange={(e: ChangeEvent<HTMLInputElement>) =>
-							setUserData((prevState) => ({ ...prevState, user: { ...prevState.user, [e.target.id]: e.target.value } }))
-						}
-					/>
-				))}{' '}
-				{errorCommunicate !== '' && <ErrorAlert title='Rejestracja się nie udała!' communicate={errorCommunicate} />}
-				{!loadingProcess ? (
-					<Button onClick={handleRegister} label='Zarejestruj się' />
-				) : (
-					<LoadingButton label='Rejestracja' />
-				)}
-				<LinkButton path='/logowanie' label='Masz już konto? Zaloguj się.' />
-			</form>
-		</div>
+		<AuthRedirector>
+			<div className={globalStyles.container}>
+				<SwitchThemeButton customStyles='absolute top-7 right-7' />
+				<form className='w-full max-w-[360px]' onSubmit={handleRegister}>
+					<FormHeading title='Rejestracja' />
+					{formFields.map((el, index) => (
+						<FormInput
+							key={index}
+							label={el.label}
+							id={el.id}
+							type={el.type}
+							onChange={(e: ChangeEvent<HTMLInputElement>) =>
+								setUserData((prevState) => ({
+									...prevState,
+									user: { ...prevState.user, [e.target.id]: e.target.value },
+								}))
+							}
+						/>
+					))}{' '}
+					{errorCommunicate !== '' && <ErrorAlert title='Rejestracja się nie udała!' communicate={errorCommunicate} />}
+					{!loadingProcess ? (
+						<Button onClick={handleRegister} label='Zarejestruj się' />
+					) : (
+						<LoadingButton label='Rejestracja' />
+					)}
+					<LinkButton path='/logowanie' label='Masz już konto? Zaloguj się.' />
+				</form>
+			</div>
+		</AuthRedirector>
 	);
 };
 
