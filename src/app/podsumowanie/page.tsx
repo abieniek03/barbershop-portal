@@ -69,9 +69,9 @@ const SaveVisitPage: FC = () => {
 					<div className='max-w-md text-center'>
 						<p>Twoja wyzyta została zarejestrowana. Pamiętaj o przybyciu do salonu w wyznaczonym terminie.</p>
 						<p className='text-lg font-bold mt-2 mb-4'>Do zobaczenia!</p>
-						<Link href='/' className={globalStyles.buttonPrimary}>
+						<a href='/' className={globalStyles.buttonPrimary}>
 							OK
-						</Link>
+						</a>
 					</div>
 				</Modal>
 			</Layout>

@@ -1,7 +1,7 @@
 'use client';
 
-import { FC, useState, ChangeEvent, FormEvent, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { FC, useState, ChangeEvent, FormEvent} from 'react';
+
 
 import AuthRedirector from '@/hoc/AuthRedirector';
 
@@ -20,8 +20,6 @@ import { IUserData } from '@/store/features/userSlice';
 import globalStyles from '@/styles/global';
 
 const RegisterPage: FC = () => {
-	const router = useRouter();
-	const [mounted, setMounted] = useState<boolean>(false);
 	const [loadingProcess, setLoadingProcess] = useState<boolean>(false);
 	const [errorCommunicate, setErrorCommunicate] = useState<string>('');
 
@@ -81,7 +79,7 @@ const RegisterPage: FC = () => {
 					setLoadingProcess(false);
 					sessionStorage.setItem('auth-token', res.data.authToken);
 					sessionStorage.setItem('user-id', res.data.newUser.id);
-					router.push(navigateAuthUser(res.data.newUser.rank));
+					window.location.href = navigateAuthUser(res.data.user.rank);
 				})
 				.catch((error) => {
 					console.log(error);

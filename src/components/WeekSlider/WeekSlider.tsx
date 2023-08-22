@@ -149,7 +149,13 @@ const WeekSlider: FC<{ view: string }> = ({ view }) => {
 
 		const freeHours = allVisitsHour.filter((hour) => !bookedVisitsHour.includes(hour));
 
-		setAccessibleVisits(freeHours);
+		let currentTime: Date | string = new Date();
+		currentTime.setMinutes(currentTime.getMinutes() + 30);
+		currentTime = currentTime.toString().split(' ')[4].slice(0, 5);
+
+		const avaibleHours = freeHours.filter((hour) => hour > currentTime);
+		setAccessibleVisits(avaibleHours);
+
 		setLoading(false);
 	};
 

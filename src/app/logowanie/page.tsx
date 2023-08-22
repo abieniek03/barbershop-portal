@@ -1,7 +1,7 @@
 'use client';
 
-import { FC, useState, ChangeEvent, FormEvent, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { FC, useState, ChangeEvent, FormEvent } from 'react';
+
 
 import AuthRedirector from '@/hoc/AuthRedirector';
 
@@ -24,8 +24,6 @@ interface IUserData {
 }
 
 const LoginPage: FC = () => {
-	const router = useRouter();
-	const [mounted, setMounted] = useState<boolean>(false);
 	const [loadingProcess, setLoadingProcess] = useState<boolean>(false);
 	const [errorCommunicate, setErrorCommunicate] = useState<string>('');
 
@@ -60,7 +58,7 @@ const LoginPage: FC = () => {
 					setLoadingProcess(false);
 					sessionStorage.setItem('auth-token', res.data.authToken);
 					sessionStorage.setItem('user-id', res.data.user.id);
-					router.push(navigateAuthUser(res.data.user.rank));
+					window.location.href = navigateAuthUser(res.data.user.rank);
 				})
 				.catch((error) => {
 					setLoadingProcess(false);
