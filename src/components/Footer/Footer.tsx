@@ -25,9 +25,15 @@ const Footer: FC = () => {
 						</li>
 					))}
 				</ul>
-				<span className='text-sm text-gray-500 sm:text-center dark:text-gray-400'>
+				<p className='mb-2 text-sm text-gray-500 sm:text-center dark:text-gray-400'>
+					Wykonane przez{' '}
+					<a href='https://www.abieniek.dev' target='_blank' className='font-bold hover:text-primary'>
+						abieniek.dev
+					</a>
+				</p>
+				<p className='mb-2 text-sm text-gray-500 sm:text-center dark:text-gray-400'>
 					© {handleCurrentYear()} Wszelkie prawa zastrzeżone.
-				</span>
+				</p>
 			</div>
 		</footer>
 	);

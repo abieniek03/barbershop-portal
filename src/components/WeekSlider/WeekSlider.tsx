@@ -91,7 +91,7 @@ const WeekSlider: FC<{ view: string }> = ({ view }) => {
 	const generateCalendar = useCallback(() => {
 		const tempCalendar: Date[] = [];
 
-		const currentDate = new Date(date);
+		const currentDate = new Date(handleCurrentDate());
 
 		while (tempCalendar.length < 15) {
 			const dayOfWeek = currentDate.getDay();
@@ -104,10 +104,10 @@ const WeekSlider: FC<{ view: string }> = ({ view }) => {
 		}
 
 		setCalendar(tempCalendar);
-	}, [date]);
+	}, []);
 
 	const horizontalScroll = (direction: string) => {
-		const container = document.querySelector('#elo');
+		const container = document.querySelector('#date-container');
 		if (container) {
 			if (direction === 'right') {
 				container.scrollBy(200, 0);
@@ -128,7 +128,7 @@ const WeekSlider: FC<{ view: string }> = ({ view }) => {
 		}
 
 		// switch from sunday to monday
-		if (currentDate.getDay() === 0) {
+		if (currentDate.getDay() === 0 || currentDate.getHours() > 17) {
 			currentDate.setDate(currentDate.getDate() + 1);
 		}
 
@@ -149,7 +149,19 @@ const WeekSlider: FC<{ view: string }> = ({ view }) => {
 
 		const freeHours = allVisitsHour.filter((hour) => !bookedVisitsHour.includes(hour));
 
-		setAccessibleVisits(freeHours);
+		let currentTime: Date | string = new Date();
+		currentTime.setMinutes(currentTime.getMinutes() + 30);
+		currentTime = currentTime.toString().split(' ')[4].slice(0, 5);
+
+		const currentDate = new Date().toString();
+
+		if (date == currentDate.slice(4, 15)) {
+			const avaibleHours = freeHours.filter((hour) => hour > currentTime);
+			setAccessibleVisits(avaibleHours);
+		} else {
+			setAccessibleVisits(freeHours);
+		}
+
 		setLoading(false);
 	};
 
@@ -226,7 +238,7 @@ const WeekSlider: FC<{ view: string }> = ({ view }) => {
 			) : (
 				<div>
 					<div>
-						<div className='relative z-0'>
+						<div className='relative z-0 '>
 							<button>
 								<LuArrowLeft
 									className={`${stylesArrowButton} -left-6 lg:-left-10`}
@@ -241,7 +253,10 @@ const WeekSlider: FC<{ view: string }> = ({ view }) => {
 						<p className='text-gray-800 dark:text-neutral-300 text-center text-lg font-bold'>
 							{monthsNames[new Date(visitData.date).getMonth()]}
 						</p>
-						<div className='flex overflow-hidden cursor-pointer pb-3 mt-3 border-b border-gray-200 dark:border-gray-600 scroll-smooth'>
+						<div
+							className='flex overflow-hidden cursor-pointer pb-3 mt-3 border-b border-gray-200 dark:border-gray-600 scroll-smooth'
+							id='date-container'
+						>
 							{calendar.map((el, index) => (
 								<button
 									key={index}

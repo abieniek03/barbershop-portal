@@ -1,7 +1,9 @@
 'use client';
 
-import { FC, useState, ChangeEvent, FormEvent, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { FC, useState, ChangeEvent, FormEvent } from 'react';
+
+
+import AuthRedirector from '@/hoc/AuthRedirector';
 
 import SwitchThemeButton from '@/components/Theme/SwitchThemeButton';
 import FormHeading from '@/components/Form/FormHeading';
@@ -22,8 +24,6 @@ interface IUserData {
 }
 
 const LoginPage: FC = () => {
-	const router = useRouter();
-	const [mounted, setMounted] = useState<boolean>(false);
 	const [loadingProcess, setLoadingProcess] = useState<boolean>(false);
 	const [errorCommunicate, setErrorCommunicate] = useState<string>('');
 
@@ -58,7 +58,7 @@ const LoginPage: FC = () => {
 					setLoadingProcess(false);
 					sessionStorage.setItem('auth-token', res.data.authToken);
 					sessionStorage.setItem('user-id', res.data.user.id);
-					router.push(navigateAuthUser(res.data.user.rank));
+					window.location.href = navigateAuthUser(res.data.user.rank);
 				})
 				.catch((error) => {
 					setLoadingProcess(false);
@@ -67,39 +67,33 @@ const LoginPage: FC = () => {
 		}
 	};
 
-	useEffect(() => {
-		setMounted(true);
-		if (sessionStorage.getItem('auth-token')) {
-			router.push('/');
-		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
-
 	return (
-		<div className={globalStyles.container}>
-			<SwitchThemeButton customStyles='absolute top-7 right-7' />
+		<AuthRedirector>
+			<div className={globalStyles.container}>
+				<SwitchThemeButton customStyles='absolute top-7 right-7' />
 
-			<form className='w-full max-w-[360px]' onSubmit={handleLogin}>
-				<FormHeading title='Logowanie' />
-				{formFields.map((el, index) => (
-					<FormInput
-						label={el.label}
-						id={el.id}
-						key={index}
-						type={el.type}
-						onChange={(e: ChangeEvent<HTMLInputElement>) =>
-							setUserData((prevState) => ({ ...prevState, [e.target.id]: e.target.value }))
-						}
-					/>
-				))}
+				<form className='w-full max-w-[360px]' onSubmit={handleLogin}>
+					<FormHeading title='Logowanie' />
+					{formFields.map((el, index) => (
+						<FormInput
+							label={el.label}
+							id={el.id}
+							key={index}
+							type={el.type}
+							onChange={(e: ChangeEvent<HTMLInputElement>) =>
+								setUserData((prevState) => ({ ...prevState, [e.target.id]: e.target.value }))
+							}
+						/>
+					))}
 
-				{errorCommunicate !== '' && <ErrorAlert title={errorCommunicate} />}
-				{!loadingProcess ? <Button onClick={handleLogin} label='Zaloguj się' /> : <LoadingButton label='Logowanie' />}
-			</form>
-			<LinkButton path='/odzyskiwanie' label='Nie pamiętam hasła' />
-			<span className='w-full max-w-[360px] border my-2 dark:border-gray-600'></span>
-			<LinkButton path='/rejestracja' label='Nie masz jeszcze konta? Zarejestruj się.' />
-		</div>
+					{errorCommunicate !== '' && <ErrorAlert title={errorCommunicate} />}
+					{!loadingProcess ? <Button onClick={handleLogin} label='Zaloguj się' /> : <LoadingButton label='Logowanie' />}
+				</form>
+				<LinkButton path='/odzyskiwanie' label='Nie pamiętam hasła' />
+				<span className='w-full max-w-[360px] border my-2 dark:border-gray-600'></span>
+				<LinkButton path='/rejestracja' label='Nie masz jeszcze konta? Zarejestruj się.' />
+			</div>
+		</AuthRedirector>
 	);
 };
 
