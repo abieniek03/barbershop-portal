@@ -1,6 +1,6 @@
 'use client';
 import { FC, useState, useEffect } from 'react';
-import Link from 'next/link';
+
 import { useRouter } from 'next/navigation';
 import Navbar from '@/components/Navbar/Navbar';
 import Layout from '@/components/Layouts/Layout';
@@ -36,7 +36,7 @@ const SaveVisitPage: FC = () => {
 		if (!sessionStorage.getItem('visit-data') || !sessionStorage.getItem('auth-token')) {
 			router.push('/');
 		}
-		setMounted(true); 
+		setMounted(true);
 		if (mounted) {
 			setVisitData(JSON.parse(sessionStorage.getItem('visit-data') || ''));
 		}
