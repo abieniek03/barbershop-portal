@@ -1,13 +1,18 @@
-'use client';
-import { FC, ReactNode } from 'react';
-import { redirect } from 'next/navigation';
-import { useRouter } from 'next/navigation';
+"use client";
+import { FC, ReactNode, useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 const AuthRedirector: FC<{ children: ReactNode }> = ({ children }) => {
 	const router = useRouter();
-	if (sessionStorage.getItem('auth-token')) {
-		router.push('/');
-	}
+	const [mounted, setMounted] = useState<boolean>(false);
+
+	useEffect(() => {
+		setMounted(true);
+
+		if (mounted && sessionStorage.getItem("auth-token")) {
+			router.push("/");
+		}
+	}, [mounted]);
 
 	return <>{children}</>;
 };
