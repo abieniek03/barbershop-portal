@@ -9,8 +9,10 @@ const AuthRedirector: FC<{ children: ReactNode }> = ({ children }) => {
 	useEffect(() => {
 		setMounted(true);
 
-		if (mounted && sessionStorage.getItem("auth-token")) {
-			router.push("/");
+		if (mounted) {
+			if (sessionStorage.getItem("auth-token")) {
+				router.push("/");
+			}
 		}
 	}, [mounted]);
 
