@@ -67,7 +67,7 @@ const SaveVisitPage: FC = () => {
 								{loading ? (
 									<LoadingButton label="Potwierdzanie..." />
 								) : (
-									<button onClick={saveVisit} className={globalStyles.buttonPrimary}>
+									<button onClick={saveVisit} className={globalStyles.buttonPrimary + " w-full"}>
 										Potwierdź
 									</button>
 								)}
