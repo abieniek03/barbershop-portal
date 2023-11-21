@@ -1,21 +1,21 @@
-'use client';
-import { FC, useState, useEffect, useCallback, useRef, MouseEvent } from 'react';
-import { useRouter } from 'next/navigation';
+"use client";
+import { FC, useState, useEffect, useCallback, useRef, MouseEvent } from "react";
+import { useRouter } from "next/navigation";
 
-import { useStoreSelector } from '@/store/store';
+import { useStoreSelector } from "@/store/store";
 
-import Modal from '../Modals/Modal';
-import { LuX, LuArrowLeft, LuArrowRight, LuUser } from 'react-icons/lu';
+import Modal from "../Modals/Modal";
+import { LuX, LuArrowLeft, LuArrowRight, LuUser } from "react-icons/lu";
 
-import fetchVisits from '@/utils/fetch/fetchVisits';
-import fetchServices from '@/utils/fetch/fetchServices';
+import fetchVisits from "@/utils/fetch/fetchVisits";
+import fetchServices from "@/utils/fetch/fetchServices";
 
-import { IUserData } from '@/store/features/userSlice';
-import { IServicesItem } from '@/components/Sections/OfferSection';
-import { formatDay, formatDate, formatFullDate } from '@/utils/formatDate';
+import { IUserData } from "@/store/features/userSlice";
+import { IServicesItem } from "@/components/Sections/OfferSection";
+import { formatDay, formatDate, formatFullDate } from "@/utils/formatDate";
 
-import globalStyles from '@/styles/global';
-import LoadingAnimation from '../Animations/LoadingAnimation';
+import globalStyles from "@/styles/global";
+import LoadingAnimation from "../Animations/LoadingAnimation";
 
 export interface IVisitData {
 	id?: string;
@@ -28,7 +28,7 @@ export interface IVisitData {
 }
 
 const stylesArrowButton =
-	'absolute z-0 top-[70px] bg-neutral-100 dark:bg-gray-700 text-primary dark:text-white text-4xl p-2 rounded-full';
+	"absolute z-0 top-[70px] bg-neutral-100 dark:bg-gray-700 text-primary dark:text-white text-4xl p-2 rounded-full";
 
 const WeekSlider: FC<{ view: string }> = ({ view }) => {
 	const router = useRouter();
@@ -37,13 +37,13 @@ const WeekSlider: FC<{ view: string }> = ({ view }) => {
 	const [visits, setVisits] = useState<IVisitData[]>();
 	const [accessibleVisits, setAccessibleVisits] = useState<string[]>();
 	const [choiceModal, setChoiceModal] = useState<boolean>(false);
-	const [currentFullDate, setCurrentFullDate] = useState<string>('');
+	const [currentFullDate, setCurrentFullDate] = useState<string>("");
 	const [visitData, setVisitData] = useState<IVisitData>({
-		userID: '',
-		userFullName: '',
-		date: '10 Jun 2023',
-		hour: '',
-		service: '',
+		userID: "",
+		userFullName: "",
+		date: "10 Jun 2023",
+		hour: "",
+		service: "",
 		time: 0,
 	});
 	const [servicesItems, setServicesItems] = useState<IServicesItem[]>();
@@ -55,37 +55,37 @@ const WeekSlider: FC<{ view: string }> = ({ view }) => {
 	const [date] = useState(new Date());
 
 	const monthsNames = [
-		'Styczeń',
-		'Luty',
-		'Marzec',
-		'Kwiecień',
-		'Maj',
-		'Czerwiec',
-		'Lipiec',
-		'Sierpień',
-		'Wrzesień',
-		'Październik',
-		'Listopad',
-		'Grudzień',
+		"Styczeń",
+		"Luty",
+		"Marzec",
+		"Kwiecień",
+		"Maj",
+		"Czerwiec",
+		"Lipiec",
+		"Sierpień",
+		"Wrzesień",
+		"Październik",
+		"Listopad",
+		"Grudzień",
 	];
 
 	const allVisitsHour: string[] = [
-		'10:00',
-		'10:30',
-		'11:00',
-		'11:30',
-		'12:00',
-		'12:30',
-		'13:00',
-		'13:30',
-		'14:00',
-		'14:30',
-		'15:00',
-		'15:30',
-		'16:00',
-		'16:30',
-		'17:00',
-		'17:30',
+		"10:00",
+		"10:30",
+		"11:00",
+		"11:30",
+		"12:00",
+		"12:30",
+		"13:00",
+		"13:30",
+		"14:00",
+		"14:30",
+		"15:00",
+		"15:30",
+		"16:00",
+		"16:30",
+		"17:00",
+		"17:30",
 	];
 
 	const generateCalendar = useCallback(() => {
@@ -107,9 +107,9 @@ const WeekSlider: FC<{ view: string }> = ({ view }) => {
 	}, []);
 
 	const horizontalScroll = (direction: string) => {
-		const container = document.querySelector('#date-container');
+		const container = document.querySelector("#date-container");
 		if (container) {
-			if (direction === 'right') {
+			if (direction === "right") {
 				container.scrollBy(200, 0);
 			} else {
 				container.scrollBy(-200, 0);
@@ -151,7 +151,7 @@ const WeekSlider: FC<{ view: string }> = ({ view }) => {
 
 		let currentTime: Date | string = new Date();
 		currentTime.setMinutes(currentTime.getMinutes() + 30);
-		currentTime = currentTime.toString().split(' ')[4].slice(0, 5);
+		currentTime = currentTime.toString().split(" ")[4].slice(0, 5);
 
 		const currentDate = new Date().toString();
 
@@ -169,18 +169,18 @@ const WeekSlider: FC<{ view: string }> = ({ view }) => {
 		setVisitData((prevState) => ({ ...prevState, hour }));
 		setChoiceModal(true);
 
-		document.body.classList.add('overflow-hidden');
+		document.body.classList.add("overflow-hidden");
 	};
 
 	const closeChoceModal = () => {
 		setChoiceModal(false);
-		document.body.classList.remove('overflow-hidden');
+		document.body.classList.remove("overflow-hidden");
 	};
 
 	const selectService = async (e: MouseEvent<HTMLElement>) => {
-		document.body.classList.remove('overflow-hidden');
-		const service = e.currentTarget.getAttribute('data-service') || '';
-		const time = Number(e.currentTarget.getAttribute('data-time'));
+		document.body.classList.remove("overflow-hidden");
+		const service = e.currentTarget.getAttribute("data-service") || "";
+		const time = Number(e.currentTarget.getAttribute("data-time"));
 
 		setVisitData((prevState) => ({
 			...prevState,
@@ -189,10 +189,10 @@ const WeekSlider: FC<{ view: string }> = ({ view }) => {
 			time,
 		}));
 
-		if (sessionStorage.getItem('auth-token')) {
-			router.push('/podsumowanie');
+		if (sessionStorage.getItem("auth-token")) {
+			router.push("/podsumowanie");
 		} else {
-			router.push('/logowanie');
+			router.push("/logowanie");
 		}
 	};
 
@@ -204,7 +204,7 @@ const WeekSlider: FC<{ view: string }> = ({ view }) => {
 				const data = await fetchServices();
 				setServicesItems(data);
 			} catch (error) {
-				console.error('Błąd podczas pobierania usług:', error);
+				console.error("Błąd podczas pobierania usług:", error);
 			}
 		};
 
@@ -213,7 +213,7 @@ const WeekSlider: FC<{ view: string }> = ({ view }) => {
 	}, []);
 
 	useEffect(() => {
-		sessionStorage.setItem('visit-data', JSON.stringify(visitData));
+		sessionStorage.setItem("visit-data", JSON.stringify(visitData));
 	}, [visitData]);
 
 	useEffect(() => {
@@ -232,30 +232,30 @@ const WeekSlider: FC<{ view: string }> = ({ view }) => {
 	return (
 		<>
 			{loading ? (
-				<div className='mt-8'>
-					<LoadingAnimation label='Wczytywanie' />
+				<div className="mt-8">
+					<LoadingAnimation label="Wczytywanie" />
 				</div>
 			) : (
 				<div>
 					<div>
-						<div className='relative z-0 '>
+						<div className="relative z-0 ">
 							<button>
 								<LuArrowLeft
 									className={`${stylesArrowButton} -left-6 lg:-left-10`}
-									onClick={() => horizontalScroll('left')}
+									onClick={() => horizontalScroll("left")}
 								/>
 								<LuArrowRight
 									className={`${stylesArrowButton} -right-6 lg:-right-10`}
-									onClick={() => horizontalScroll('right')}
+									onClick={() => horizontalScroll("right")}
 								/>
 							</button>
 						</div>
-						<p className='text-gray-800 dark:text-neutral-300 text-center text-lg font-bold'>
+						<p className="text-gray-800 dark:text-neutral-300 text-center text-lg font-bold">
 							{monthsNames[new Date(visitData.date).getMonth()]}
 						</p>
 						<div
-							className='flex overflow-hidden cursor-pointer pb-3 mt-3 border-b border-gray-200 dark:border-gray-600 scroll-smooth'
-							id='date-container'
+							className="flex overflow-hidden cursor-pointer pb-3 mt-3 border-b border-gray-200 dark:border-gray-600 scroll-smooth"
+							id="date-container"
 						>
 							{calendar.map((el, index) => (
 								<button
@@ -263,8 +263,8 @@ const WeekSlider: FC<{ view: string }> = ({ view }) => {
 									data-date={el.toDateString().substring(4, 15)}
 									className={`${
 										handleDate(el) === visitData.date
-											? 'bg-primary text-white text-center'
-											: 'hover:bg-neutral-100 dark:hover:bg-gray-700'
+											? "bg-primary text-white text-center"
+											: "hover:bg-neutral-100 dark:hover:bg-gray-700"
 									} mx-2 w-16 text-center flex-shrink-0 rounded-lg`}
 									onClick={() => {
 										const date = el.toDateString().substring(4, 15);
@@ -272,13 +272,13 @@ const WeekSlider: FC<{ view: string }> = ({ view }) => {
 										getVisits(date);
 									}}
 								>
-									<p>{formatDay(el).split('.')[0]}</p>
+									<p>{formatDay(el).split(".")[0]}</p>
 									<p>{formatDate(el)}</p>
 								</button>
 							))}
 						</div>
 					</div>
-					{view === 'admin' ? (
+					{view === "admin" ? (
 						<>
 							<div>
 								{visits && visits.length !== 0 ? (
@@ -286,25 +286,25 @@ const WeekSlider: FC<{ view: string }> = ({ view }) => {
 										<div key={index} className={globalStyles.visitItem}>
 											<p className={globalStyles.visitItemTitle}>{el.service}</p>
 											<p>{el.hour}</p>
-											<p className='mt-2 flex items-center'>
-												<LuUser className='mr-2 text-lg' />
+											<p className="mt-2 flex items-center">
+												<LuUser className="mr-2 text-lg" />
 												{el.userFullName}
 											</p>
 										</div>
 									))
 								) : (
-									<p className='text-center mt-4'>Brak wizyt w tym terminie.</p>
+									<p className="text-center mt-4">Brak wizyt w tym terminie.</p>
 								)}
 							</div>
 						</>
 					) : (
 						<>
-							<div className='w-full flex flex-wrap justify-center mx-auto py-4'>
+							<div className="w-full flex flex-wrap justify-center mx-auto py-4">
 								{accessibleVisits &&
 									accessibleVisits.map((el, index) => (
 										<button
-											onClick={(e: MouseEvent<HTMLButtonElement>) => choiceHour(e.currentTarget.textContent || '')}
-											type='button'
+											onClick={(e: MouseEvent<HTMLButtonElement>) => choiceHour(e.currentTarget.textContent || "")}
+											type="button"
 											key={index}
 											className={`${globalStyles.buttonSecondary} mb-2 mr-2 p-2`}
 										>
@@ -313,32 +313,32 @@ const WeekSlider: FC<{ view: string }> = ({ view }) => {
 									))}
 							</div>
 
-							<Modal title='Szczegóły wizyty' visible={choiceModal} addStyles='w-3/4 max-w-screen-md'>
-								<button onClick={closeChoceModal} className='absolute text-2xl top-6 right-6'>
-									<LuX className='text-neutral-100' />
+							<Modal title="Szczegóły wizyty" visible={choiceModal} addStyles="w-3/4 max-w-screen-md">
+								<button onClick={closeChoceModal} className="absolute text-2xl top-6 right-6">
+									<LuX className="text-neutral-100" />
 								</button>
-								<div className='mb-4'>
-									<p className='mb-3'>
+								<div className="mb-4">
+									<p className="mb-3">
 										Termin: {currentFullDate}, {visitData.hour}
 									</p>
 								</div>
-								<div className='mb-4'>
+								<div className="mb-4">
 									<h3 className={globalStyles.h3}>Wybierz usługę:</h3>
 									{servicesItems?.map((el, index) => (
 										<div
 											key={index}
 											data-name={el.name}
 											data-time={el.time}
-											className='flex justify-between border rounded-lg my-4 px-2 py-4 dark:border-gray-700'
+											className="flex justify-between border rounded-lg my-4 px-2 py-4 dark:border-gray-700"
 										>
-											<div className='ml-3'>
+											<div className="ml-3">
 												<p>{el.name}</p>
-												<p className='text-sm text-gray-800 dark:text-gray-400'>{el.time} minut</p>
+												<p className="text-sm text-gray-800 dark:text-gray-400">{el.time} minut</p>
 											</div>
-											<div className='flex flex-col items-end'>
-												<p className='mr-3 text-lg font-bold text-primary'>{el.price} PLN</p>
+											<div className="flex flex-col items-end">
+												<p className="mr-3 text-lg font-bold text-primary">{el.price} PLN</p>
 												<button
-													type='button'
+													type="button"
 													className={globalStyles.buttonPrimary}
 													data-service={el.name}
 													data-time={el.time}
