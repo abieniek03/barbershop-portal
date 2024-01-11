@@ -1,39 +1,31 @@
-
 ![Logo](https://i.imgur.com/unz69Pn.png)
 
+Portal allowing users to schedule appointments with a barber. Account creation is required for this purpose.
 
-#
-Portal umożliwiający zapisanie się na wizytę do barbera. Wymagane do tego jest utworzenie konta.
+![barber.abwebproject.com](https://github.com/abieniek03/test-repo/assets/106828687/af9007e8-c082-479a-b8c9-954f36be9842)
 
-![barber abwebproject com_](https://github.com/abieniek03/test-repo/assets/106828687/af9007e8-c082-479a-b8c9-954f36be9842)
+## Check out the project
 
+[https://barber.abwebproject.com/](https://barber.abwebproject.com/)
 
-## Zobacz projekt
+## Technologies
 
-https://barber.abwebproject.com/
+**Styling:** TailwindCSS \
+**Others:** Next.js, React, Redux, Prisma, MongoDB, REST API
 
+## Features
 
-## Technologie
+- REST API for communication between the user interface and the database.
+- Light/dark color theme.
+- Account creation.
+- Password reset via email.
+- Booking an appointment for a chosen date and time.
+- User's appointment history.
+- Owner's view with a calendar of appointments.
 
-**Stylowanie:** TailwindCSS \
-**Pozostałe:** Next.js, React, Redux, Prisma, MongoDB, REST API
-
-
-
-## Funkcjonalności
-
-- REST API do komunikacji interfejsu użytkownika z bazą danych.
-- Jasny/ciemny motyw kolorów.
-- Tworzenie konta.
-- Możliwość zresetowania hasła przez wiadomość mailową.
-- Zapisanie się na wizytę w wybranym terminie.
-- Historia wizyt użytkownika.
-- W widoku właściciela kalendarz wizyt.
-
-## Proces zapisu w aplikacji
+## Appointment Booking Process in the Application
 ![ezgif com-optimize (1)](https://github.com/abieniek03/test-repo/assets/106828687/feb7df69-d5fa-453d-a79c-599d5fb15194)
 
-
-## Autor
+## Author
 
 - [@abieniek03](https://www.github.com/abieniek03)
